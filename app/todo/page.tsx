@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import readUserSession from '@/lib/actions/user-session.action';
-import Logout from './_components/Logout';
+import CategoryContainer from './_components/category/CategoryContainer';
 
 const Todo = async () => {
   const { data } = await readUserSession();
@@ -9,7 +9,7 @@ const Todo = async () => {
   }
   return (
     <div className="h-full overflow-x-auto p-4">
-      <h1 className="text-white">Todos works</h1>
+      <CategoryContainer />
     </div>
   );
 };
