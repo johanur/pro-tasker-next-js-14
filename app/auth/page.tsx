@@ -1,8 +1,9 @@
-import Image from 'next/image';
-import readUserSession from '@/lib/actions/user-session.action';
+import readUserSession from '../../lib/actions/user-session.action';
 import { redirect } from 'next/navigation';
 
-export default async function Home() {
+const Auth = async () => {
   const { data } = await readUserSession();
   data.session ? redirect('/todo') : redirect('/auth/login');
-}
+};
+
+export default Auth;
