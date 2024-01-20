@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation';
-import readUserSession from '../../lib/actions/user-session.action';
-import Logout from '@/app/todo/components/Logout';
+import readUserSession from '@/lib/actions/user-session.action';
+import Logout from './_components/Logout';
 
 const Todo = async () => {
   const { data } = await readUserSession();
   if (!data.session) {
-    return redirect('/auth/login');
+    return redirect('/login');
   }
   return (
     <>

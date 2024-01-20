@@ -1,6 +1,5 @@
-import createSupabaseServerClient from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { log } from 'node:util';
+import createSupabaseServerClient from '@/lib/supabase/server';
 
 const Logout = () => {
   const logout = async () => {

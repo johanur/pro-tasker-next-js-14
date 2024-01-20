@@ -1,9 +1,9 @@
 'use server';
 
-import { LoginFormData, RegisterFormData } from '@/app/(auth)/types/form';
+import { AuthResponse } from '@supabase/gotrue-js';
 import { SupabaseClient } from '@supabase/supabase-js';
 import createSupabaseServerClient from '@/lib/supabase/server';
-import { AuthResponse } from '@supabase/gotrue-js';
+import { LoginFormData } from '../_types/form';
 
 export async function loginWithEmailAndPassword(data: LoginFormData) {
   const supabase: SupabaseClient = await createSupabaseServerClient();
