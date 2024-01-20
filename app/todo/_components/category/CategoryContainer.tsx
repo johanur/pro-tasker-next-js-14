@@ -1,5 +1,5 @@
-import CategoryForm from '@/app/todo/_components/category/CategoryForm';
-import CategoryItem from '@/app/todo/_components/category/CategoryItem';
+import CategoryForm from '../../_components/category/CategoryForm';
+import CategoryItem from '../../_components/category/CategoryItem';
 
 const CategoryContainer = () => {
   const categories: any[] = [
