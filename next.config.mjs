@@ -10,15 +10,6 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
-  async redirects() {
-    return [
-      {
-        source: '/auth',
-        destination: '/auth/login',
-        permanent: false,
-      },
-    ];
-  },
 };
 
 export default nextConfig;
