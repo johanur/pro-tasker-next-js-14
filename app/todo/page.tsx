@@ -8,10 +8,9 @@ const Todo = async () => {
     return redirect('/login');
   }
   return (
-    <>
-      <h1>Todos works</h1>
-      <Logout />
-    </>
+    <div className="h-full overflow-x-auto p-4">
+      <h1 className="text-white">Todos works</h1>
+    </div>
   );
 };
 
