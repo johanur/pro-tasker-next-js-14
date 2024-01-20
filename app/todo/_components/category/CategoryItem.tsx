@@ -1,12 +1,16 @@
 'use client';
 
 import TodoItem from '@/app/todo/_components/todos/TodoItem';
+import TodoCreate from '@/app/todo/_components/todos/TodoCreate';
+import { useState } from 'react';
 
 interface Props {
   category: any;
   index: number;
 }
 const CategoryItem = ({ category, index }: Props) => {
+  const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
+
   const todos = [
     {
       id: 123,
@@ -24,8 +28,15 @@ const CategoryItem = ({ category, index }: Props) => {
       order: 3,
     },
   ];
+
+  const handleTodoCreateDialogToggle = (isOpen: boolean) => {
+    setTodoCreateDialogOpen(isOpen);
+  };
+
   return (
     <>
+      <TodoCreate />
+
       <li className="h-full w-[272px] shrink-0 select-none">
         <div className="w-full rounded-md bg-[#f1f2f4] pb-2 shadow-md">
           <div className="items-start- flex justify-between gap-x-2 px-2 pt-2 text-sm font-semibold">
@@ -39,12 +50,16 @@ const CategoryItem = ({ category, index }: Props) => {
           </ol>
 
           <div className="px-2 pt-2">
-            <button className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500">
+            <button
+              className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
+              onClick={() => handleTodoCreateDialogToggle(true)}>
               + Add a card
             </button>
           </div>
         </div>
       </li>
+
+      <TodoCreate isOpen={isTodoCreateDialogOpen} onToggle={handleTodoCreateDialogToggle} />
     </>
   );
 };
