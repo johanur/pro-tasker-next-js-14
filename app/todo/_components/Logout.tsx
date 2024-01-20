@@ -10,7 +10,7 @@ const Logout = () => {
   };
   return (
     <form action={logout}>
-      <button className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">Logout</button>
+      <button className="font-medium text-blue-500">Logout</button>
     </form>
   );
 };
