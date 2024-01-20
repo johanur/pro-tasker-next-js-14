@@ -3,11 +3,11 @@
 import { z } from 'zod';
 import Link from 'next/link';
 import styles from '../styles/auth.module.scss';
-import { RegisterSchema } from '@/app/auth/schema/register.schema';
+import { RegisterSchema } from '@/app/(auth)/schema/register.schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterFormData } from '@/app/auth/types/form';
-import { registerWithEmailAndPassword } from '@/app/auth/actions/register.action';
+import { RegisterFormData } from '@/app/(auth)/types/form';
+import { registerWithEmailAndPassword } from '@/app/(auth)/actions/register.action';
 
 type Inputs = z.infer<typeof RegisterSchema>;
 
@@ -86,7 +86,7 @@ const RegisterForm = () => {
 
         <div className={styles.footer}>
           <span className={styles['footer-text']}>Already a member? </span>
-          <Link href="/auth/login" className={styles['footer-action']}>
+          <Link href="/login" className={styles['footer-action']}>
             Login
           </Link>
         </div>

@@ -3,7 +3,7 @@
 import createSupabaseServerClient from '@/lib/supabase/server';
 import { AuthResponse } from '@supabase/gotrue-js';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { RegisterFormData } from '@/app/auth/types/form';
+import { RegisterFormData } from '@/app/(auth)/types/form';
 
 export async function registerWithEmailAndPassword(data: RegisterFormData) {
   const supabase: SupabaseClient = await createSupabaseServerClient();

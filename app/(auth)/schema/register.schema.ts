@@ -1,5 +1,5 @@
 import { z, ZodType } from 'zod';
-import { RegisterFormData } from '@/app/auth/types/form';
+import { RegisterFormData } from '@/app/(auth)/types/form';
 
 export const RegisterSchema: ZodType<RegisterFormData> = z
   .object({

@@ -1,5 +1,5 @@
 import { z, ZodType } from 'zod';
-import { LoginFormData } from '@/app/auth/types/form';
+import { LoginFormData } from '@/app/(auth)/types/form';
 
 export const LoginSchema: ZodType<LoginFormData> = z.object({
   email: z

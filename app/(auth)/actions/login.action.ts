@@ -1,6 +1,6 @@
 'use server';
 
-import { LoginFormData, RegisterFormData } from '@/app/auth/types/form';
+import { LoginFormData, RegisterFormData } from '@/app/(auth)/types/form';
 import { SupabaseClient } from '@supabase/supabase-js';
 import createSupabaseServerClient from '@/lib/supabase/server';
 import { AuthResponse } from '@supabase/gotrue-js';

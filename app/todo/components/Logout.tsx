@@ -7,7 +7,7 @@ const Logout = () => {
     'use server';
     const supabase = await createSupabaseServerClient();
     await supabase.auth.signOut();
-    redirect('/auth/login');
+    redirect('/login');
   };
   return (
     <form action={logout}>
