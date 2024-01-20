@@ -29,9 +29,21 @@ const CategoryItem = ({ category, index }: Props) => {
     },
   ];
 
+  const [isDragging, setIsDragging] = useState(false)
+
+  const handleDragging = (dragging: boolean) => setIsDragging(dragging)
+
   const handleTodoCreateDialogToggle = (isOpen: boolean) => {
     setTodoCreateDialogOpen(isOpen);
   };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    console.log('Log Here categgory: ',category);
+    handleDragging(false)
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
 
   return (
     <>
@@ -43,11 +55,15 @@ const CategoryItem = ({ category, index }: Props) => {
             <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">{category.title}</div>
           </div>
 
-          <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5">
-            {todos.map(todo => (
-              <TodoItem title={todo.title} key={todo.id} />
-            ))}
-          </ol>
+          <div onDrop={handleDrop}
+               onDragOver={handleDragOver}>
+            <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5" >
+              {todos.map(todo => (
+                <TodoItem todo={todo} key={todo.id} handleDragging={handleDragging}
+                />
+              ))}
+            </ol>
+          </div>
 
           <div className="px-2 pt-2">
             <button
