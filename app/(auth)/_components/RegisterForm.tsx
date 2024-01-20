@@ -1,32 +1,33 @@
 'use client';
 
+import { z } from 'zod';
 import Link from 'next/link';
-import styles from '../styles/auth.module.scss';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginFormData, RegisterFormData } from '@/app/auth/types/form';
-import { registerWithEmailAndPassword } from '@/app/auth/actions/register.action';
-import { z } from 'zod';
-import { LoginSchema } from '@/app/auth/schema/login.schema';
-import { loginWithEmailAndPassword } from '@/app/auth/actions/login.action';
 
-type Inputs = z.infer<typeof LoginSchema>;
+import styles from '../_styles/auth.module.scss';
+import { RegisterFormData } from '../_types/form';
+import { RegisterSchema } from '../_schema/register.schema';
+import { registerWithEmailAndPassword } from '../_actions/register.action';
 
-const LoginForm = () => {
+type Inputs = z.infer<typeof RegisterSchema>;
+
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(RegisterSchema),
   });
 
-  const submitData = async (data: LoginFormData) => {
-    const result = await loginWithEmailAndPassword(data);
+  const submitData = async (data: RegisterFormData) => {
+    const result = await registerWithEmailAndPassword(data);
 
     // TODO: While Submitting - Disable Input fields and submit button. If possible add spinner to submit button
     // TODO: Handle Error & Success - Show Toastr
   };
+
   return (
     <div className={styles['authentication-container']}>
       <div className={styles.header}>
@@ -35,17 +36,17 @@ const LoginForm = () => {
           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
           alt="Pro Tasker"
         />
-        <h2 className={styles['header-title']}>Login to your account</h2>
+        <h2 className={styles['header-title']}>Create your Free Account</h2>
       </div>
 
-      <div className={styles['form']} onSubmit={handleSubmit(submitData)}>
-        <form className="space-y-6">
+      <div className={styles['form']}>
+        <form className="space-y-6" onSubmit={handleSubmit(submitData)}>
           <div className="form-field">
             <label htmlFor="email" className={styles['form-label']}>
               Email address
             </label>
             <div className="mt-2">
-              <input id="email" type="text" className={styles['form-input']} {...register('email')} />
+              <input id="email" className={styles['form-input']} {...register('email')} />
             </div>
             {errors?.email?.message && <p className="pt-1.5 text-sm text-red-400">{errors.email.message}</p>}
           </div>
@@ -60,22 +61,39 @@ const LoginForm = () => {
             {errors?.password?.message && <p className="pt-1.5 text-sm text-red-400">{errors.password.message}</p>}
           </div>
 
+          <div className="form-field">
+            <label htmlFor="confirm-password" className={styles['form-label']}>
+              Confirm Password
+            </label>
+            <div className="mt-2">
+              <input
+                id="confirm-password"
+                type="password"
+                className={styles['form-input']}
+                {...register('confirmPassword')}
+              />
+            </div>
+            {errors?.confirmPassword?.message && (
+              <p className="pt-1.5 text-sm text-red-400">{errors.confirmPassword.message}</p>
+            )}
+          </div>
+
           <div className="form-actions">
             <button type="submit" className={styles['form-submit-button']}>
-              Login
+              Register
             </button>
           </div>
         </form>
-      </div>
 
-      <div className={styles.footer}>
-        <span className={styles['footer-text']}>Not a member? </span>
-        <Link href="/auth/register" className={styles['footer-action']}>
-          Register
-        </Link>
+        <div className={styles.footer}>
+          <span className={styles['footer-text']}>Already a member? </span>
+          <Link href="/login" className={styles['footer-action']}>
+            Login
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

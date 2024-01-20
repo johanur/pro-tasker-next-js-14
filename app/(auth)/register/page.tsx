@@ -1,6 +1,6 @@
-import RegisterForm from '@/app/auth/components/RegisterForm';
-import readUserSession from '@/lib/actions/user-session.action';
 import { redirect } from 'next/navigation';
+import readUserSession from '@/lib/actions/user-session.action';
+import RegisterForm from '../_components/RegisterForm';
 
 const Register = async () => {
   const { data } = await readUserSession();
