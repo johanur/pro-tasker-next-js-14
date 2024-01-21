@@ -14,10 +14,10 @@ const Todo = async () => {
   const { data } = await getCategoriesWithTodos();
 
   if (!data) {
-    return <h1>Something went wrong!</h1>
+    return <h1>Something went wrong!</h1>;
   }
 
-  const updateTodoCategory = async(todoId: string, categoryId: string) => {
+  const updateTodoCategory = async (todoId: string, categoryId: string) => {
     'use server';
     const response = await updateTodoCategoryId(todoId, categoryId);
 
@@ -37,8 +37,7 @@ const Todo = async () => {
       //   description: "The item has been successfully moved to the new category",
       // })
     }
-
-  }
+  };
 
   return (
     <div className="h-full overflow-x-auto p-4">

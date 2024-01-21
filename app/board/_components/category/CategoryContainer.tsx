@@ -25,7 +25,7 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
 
     const todoToMove = sourceCategory.todos.find(todo => todo.id === todoId);
 
-    if(!todoToMove) {
+    if (!todoToMove) {
       return;
     }
 
@@ -33,13 +33,12 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
 
     const targetCategory = categoriesWithTodos.find(category => category.id === categoryId);
 
-    if(!targetCategory) {
+    if (!targetCategory) {
       return;
     }
 
-    const updatedTodoToMove = {...todoToMove, category_id: categoryId};
+    const updatedTodoToMove = { ...todoToMove, category_id: categoryId };
     const updatedTargetTodos = [...targetCategory.todos, updatedTodoToMove];
-
 
     const updatedCategoriesWithTodos = categoriesWithTodos.map(category => {
       if (category.id === sourceCategory.id) {
@@ -52,7 +51,7 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
 
     setCategoriesWithTodos(updatedCategoriesWithTodos);
     updateTodoCategory(todoId, categoryId);
-  }
+  };
 
   return (
     <ol className="flex h-full gap-x-3">
