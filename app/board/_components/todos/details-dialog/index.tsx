@@ -4,7 +4,7 @@ import Description from './Description';
 import CategorySelect from './CategorySelect';
 import ExpiryDatepicker from '@/app/board/_components/todos/details-dialog/ExpiryDatepicket';
 
-const TodoDetails = ({ isOpen, onToggle, todo }: any) => {
+const TodoDetails = ({ isOpen, onToggle, todo, categoryTitle, categories }: any) => {
   const handleCloseDialog = () => {
     onToggle(false);
   };
@@ -14,7 +14,7 @@ const TodoDetails = ({ isOpen, onToggle, todo }: any) => {
       <Dialog  open={isOpen} onOpenChange={handleCloseDialog}>
         <DialogContent className="max-w-xl gap-4" onOpenAutoFocus={e => e.preventDefault()}>
           {todo && (<Header todo={todo} />)}
-          {todo && (<CategorySelect todo={todo} />)}
+          {todo && (<CategorySelect todo={todo} categoryTitle={categoryTitle} />)}
           {todo && (<ExpiryDatepicker todo={todo} />)}
           {todo && (<Description todo={todo} />)}
 

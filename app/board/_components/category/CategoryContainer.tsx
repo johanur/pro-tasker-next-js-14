@@ -2,8 +2,9 @@
 
 import CategoryForm from '../../_components/category/CategoryForm';
 import CategoryItem from '../../_components/category/CategoryItem';
-import { CategoryWithTodos, UpdateTodoCategoryFunction } from '@/app/board/_types';
+import { Category, CategoryWithTodos, UpdateTodoCategoryFunction } from '@/app/board/_types';
 import { useEffect, useState } from 'react';
+import { BoardContext } from '@/app/board/_contexts';
 
 interface Props {
   data: CategoryWithTodos[];
@@ -12,9 +13,13 @@ interface Props {
 
 const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
   const [categoriesWithTodos, setCategoriesWithTodos] = useState(data);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     setCategoriesWithTodos(data);
+
+    const categoriesWithoutTodos = data.map(({ todos, ...rest }) => rest);
+    setCategories(categoriesWithoutTodos)
   }, [data]);
 
   const handleUpdateList = (todoId: string, categoryId: string) => {
@@ -54,13 +59,17 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
   };
 
   return (
-    <ol className="flex h-full gap-x-3">
-      {categoriesWithTodos.map((category: any) => {
-        return <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />;
-      })}
-      <CategoryForm />
-      <div className="w-1 flex-shrink-0" />
-    </ol>
+    <BoardContext.Provider  value={{
+      categories: categories,
+    }}>
+      <ol className="flex h-full gap-x-3">
+        {categoriesWithTodos.map((category: any) => {
+          return <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />;
+        })}
+        <CategoryForm />
+        <div className="w-1 flex-shrink-0" />
+      </ol>
+    </BoardContext.Provider>
   );
 };
 

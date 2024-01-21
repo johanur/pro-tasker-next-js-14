@@ -23,7 +23,7 @@ const schema: ZodType<any> = z.object({
     }),
 });
 
-const Header = ({ todo }: { todo: Todo }) => {
+const Header = ({ todo }: any) => {
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -59,7 +59,7 @@ const Header = ({ todo }: { todo: Todo }) => {
             )}
           />
         </Form>
-        <ExpiryDateBadge daysRemaining={-1}/>
+        <ExpiryDateBadge daysRemaining={todo.daysRemaining}/>
       </div>
     </div>
   );

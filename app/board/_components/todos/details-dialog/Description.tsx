@@ -76,7 +76,7 @@ const Description = ({ todo }: any) => {
             </form>
           </Form>
         ) : (
-          <div role="button" onClick={enableEditing} className="min-h-[78px] bg-neutral-100 hover:bg-neutral-200 text-sm font-normal py-3 px-3.5 rounded-md">
+          <div role="button" onClick={enableEditing} className="min-h-32 bg-neutral-100 hover:bg-neutral-200 text-sm font-normal py-3 px-3.5 rounded-md">
             {todo.description}
           </div>
         )}
