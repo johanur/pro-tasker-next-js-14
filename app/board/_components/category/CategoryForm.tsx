@@ -61,12 +61,6 @@ const CategoryForm = () => {
   };
 
   const submitCategory = async (data: CategoryFormData) => {
-    toast({
-      duration: 4000,
-      title: "Category Added Successfully",
-      description: "The new category has been added successfully!",
-    })
-
     const result = await addCategory(data.title);
     const { error } = JSON.parse(result);
     console.log('Log Here Result: ', result);

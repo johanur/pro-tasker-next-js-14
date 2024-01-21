@@ -10,23 +10,7 @@ interface Props {
 const CategoryItem = ({ category }: Props) => {
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
-  const todos = [
-    {
-      id: 123,
-      title: 'Test',
-      order: 2,
-    },
-    {
-      id: 234,
-      title: 'Test 2',
-      order: 1,
-    },
-    {
-      id: 456,
-      title: 'Test 3',
-      order: 3,
-    },
-  ];
+  const todos = [];
 
   const [isDragging, setIsDragging] = useState(false)
 
