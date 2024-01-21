@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { getDaysRemaining } from '@/app/board/_utils';
 
 
-const CategoryItem = ({ categoryWithTodos }: any) => {
+const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
   const { title, id: categoryId } = categoryWithTodos;
 
   const todos = categoryWithTodos.todos.map((todo: any) => {
@@ -28,8 +28,9 @@ const CategoryItem = ({ categoryWithTodos }: any) => {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    // console.log('Log Here categgory: ',categoryWithTodos);
-    handleDragging(false)
+    const todoId = e.dataTransfer.getData('text');
+    handleUpdateList(todoId, categoryId);
+    handleDragging(false);
   }
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
@@ -46,22 +47,23 @@ const CategoryItem = ({ categoryWithTodos }: any) => {
 
           <div onDrop={handleDrop}
                onDragOver={handleDragOver}>
-            <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5" >
+            <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5">
               {todos.map((todo: any) => (
                 <TodoItem todo={todo} key={todo.id} daysRemaining={todo.daysRemaining} handleDragging={handleDragging}
                 />
               ))}
             </ol>
+
+            <div className="px-2 pt-2">
+              <button
+                className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
+                onClick={() => handleTodoCreateDialogToggle(true)}>
+                + Add a card
+              </button>
+            </div>
           </div>
 
 
-          <div className="px-2 pt-2">
-            <button
-              className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
-              onClick={() => handleTodoCreateDialogToggle(true)}>
-              + Add a card
-            </button>
-          </div>
         </div>
       </li>
 

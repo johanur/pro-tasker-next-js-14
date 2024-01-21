@@ -1,3 +1,4 @@
+'use client';
 import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
 
 const TodoItem = ({ todo, handleDragging, daysRemaining }: any) => {
@@ -13,6 +14,7 @@ const TodoItem = ({ todo, handleDragging, daysRemaining }: any) => {
         role="button"
         draggable
         onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
         className="truncate rounded-md border-2 border-transparent bg-white px-3 py-2 text-sm shadow-sm hover:border-black flex flex-col items-start">
         {todo.title}
         {daysRemaining <= 2 && (

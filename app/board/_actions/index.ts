@@ -29,3 +29,8 @@ export async function addTodo(todo: { title: string, description: string, expiry
   revalidatePath("/board");
   return result;
 }
+
+export async function updateTodoCategoryId(todoId: string, categoryId: string) {
+  const supabase = await createSupabaseServerClient();
+  return supabase.from("todo").update({ category_id: categoryId }).eq('id', todoId);
+}
