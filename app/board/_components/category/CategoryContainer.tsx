@@ -1,28 +1,12 @@
 import CategoryForm from '../../_components/category/CategoryForm';
 import CategoryItem from '../../_components/category/CategoryItem';
+import { getCategories } from '@/app/board/_actions/category.actions';
 
-const CategoryContainer = () => {
-  const categories: any[] = [
-    {
-      id: 123,
-      title: 'First Category',
-      order: 1,
-    },
-    {
-      id: 234,
-      title: 'Second Category',
-      order: 2,
-    },
-    {
-      id: 456,
-      title: 'Third Category',
-      order: 3,
-    },
-  ];
+const CategoryContainer = ({ categories }: any) => {
   return (
     <ol className="flex h-full gap-x-3">
-      {categories.map((category, index) => {
-        return <CategoryItem key={category.id} index={index} category={category} />;
+      {categories.map((category: any) => {
+        return <CategoryItem key={category.id} category={category} />;
       })}
       <CategoryForm />
       <div className="w-1 flex-shrink-0" />

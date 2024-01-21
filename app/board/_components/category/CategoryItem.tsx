@@ -6,9 +6,8 @@ import { useState } from 'react';
 
 interface Props {
   category: any;
-  index: number;
 }
-const CategoryItem = ({ category, index }: Props) => {
+const CategoryItem = ({ category }: Props) => {
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
   const todos = [
