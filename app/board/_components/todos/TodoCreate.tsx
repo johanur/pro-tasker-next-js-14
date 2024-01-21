@@ -34,8 +34,10 @@ import { cn } from '@/lib/utils';
 import { addDays, format, isBefore } from 'date-fns';
 import { TodoSchema } from '@/app/board/_schema/todo.schema';
 import { useState } from 'react';
+import { addCategory, addTodo } from '@/app/board/_actions/board.actions';
+import { toast } from '@/components/ui/use-toast';
 
-const TodoCreate = ({ isOpen, onToggle }: any) => {
+const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const oneDayBefore = addDays(new Date(), -1);
@@ -44,8 +46,31 @@ const TodoCreate = ({ isOpen, onToggle }: any) => {
     resolver: zodResolver(TodoSchema),
   })
 
-  function onSubmit(values: z.infer<typeof TodoSchema>) {
-    console.log(values)
+  const onSubmit = async(values: z.infer<typeof TodoSchema>) => {
+    const data = {
+      ...values,
+      categoryId
+    }
+
+    const result = await addTodo(data);
+    const { error } = JSON.parse(result);
+    console.log('Log Here Result: ', result);
+
+    if (error?.message) {
+      toast({
+        duration: 4000,
+        variant: "destructive",
+        title: "Failed to create todo",
+        description: "There was an error while saving the new todo. Please try again later.",
+      })
+    } else {
+      toast({
+        duration: 4000,
+        title: "Todo Added Successfully",
+        description: "The new todo has been added successfully!",
+      })
+      handleCloseDialog();
+    }
   }
   const handleCloseDialog = () => {
     form.reset();

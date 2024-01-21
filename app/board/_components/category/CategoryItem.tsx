@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 
 const CategoryItem = ({ categoryWithTodos }: any) => {
-  const { todos, title } = categoryWithTodos;
+  const { todos, title, id: categoryId } = categoryWithTodos;
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
   const [isDragging, setIsDragging] = useState(false)
@@ -55,7 +55,7 @@ const CategoryItem = ({ categoryWithTodos }: any) => {
         </div>
       </li>
 
-      <TodoCreate isOpen={isTodoCreateDialogOpen} onToggle={handleTodoCreateDialogToggle} />
+      <TodoCreate isOpen={isTodoCreateDialogOpen} onToggle={handleTodoCreateDialogToggle} categoryId={categoryId} />
     </>
   );
 };
