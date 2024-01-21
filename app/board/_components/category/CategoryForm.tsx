@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CategorySchema } from '@/app/board/_schema';
 import { CategoryFormData } from '@/app/board/_types';
-import { addCategory } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
+import { addCategory } from '@/app/board/_actions';
 
 type Inputs = z.infer<typeof CategorySchema>;
 
@@ -63,7 +63,7 @@ const CategoryForm = () => {
   const submitCategory = async (data: CategoryFormData) => {
     const { error } = await addCategory(data.title);
 
-    if (error?.message) {
+    if (error) {
       toast({
         duration: 4000,
         variant: "destructive",
