@@ -57,8 +57,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
       categoryId
     }
 
-    const result = await addTodo(data);
-    const { error } = JSON.parse(result);
+    const { error } = await addTodo(data);
 
     if (error?.message) {
       toast({
