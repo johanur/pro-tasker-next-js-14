@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CategorySchema } from '@/app/board/_schema/category.schema';
 import { CategoryFormData } from '@/app/board/_types/category';
+import { addCategory } from '@/app/board/_actions/category.actions';
+import { toast } from '@/components/ui/use-toast';
 
 type Inputs = z.infer<typeof CategorySchema>;
 
@@ -58,8 +60,33 @@ const CategoryForm = () => {
     }
   };
 
-  const submitCategory = (data: CategoryFormData) => {
-    console.log('Log Here Data: ', data);
+  const submitCategory = async (data: CategoryFormData) => {
+    toast({
+      duration: 4000,
+      title: "Category Added Successfully",
+      description: "The new category has been added successfully!",
+    })
+
+    const result = await addCategory(data.title);
+    const { error } = JSON.parse(result);
+    console.log('Log Here Result: ', result);
+
+    if (error?.message) {
+      toast({
+        duration: 4000,
+        variant: "destructive",
+        title: "Failed to create Category",
+        description: "There was an error while saving the new category. Please try again later.",
+      })
+    } else {
+      toast({
+        duration: 4000,
+        title: "Category Added Successfully",
+        description: "The new category has been added successfully!",
+      })
+      disableEditing();
+      resetForm();
+    }
   };
 
   if (isEditing) {
