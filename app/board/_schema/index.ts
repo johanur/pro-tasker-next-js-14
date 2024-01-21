@@ -1,6 +1,9 @@
-import * as z from 'zod';
-import { ZodType } from 'zod';
-import { TodoFormData } from '@/app/board/_types';
+import { z, ZodType } from 'zod';
+import { CategoryFormData, TodoFormData } from '@/app/board/_types';
+
+export const CategorySchema: ZodType<CategoryFormData> = z.object({
+  title: z.string().min(1, { message: 'Title is required' }),
+});
 
 export const TodoSchema:  ZodType<TodoFormData> = z.object({
   title: z.string({

@@ -32,9 +32,9 @@ import { Calendar } from "@/components/ui/calendar"
 import * as z from "zod"
 import { cn } from '@/lib/utils';
 import { addDays, format, isBefore } from 'date-fns';
-import { TodoSchema } from '@/app/board/_schema/todo.schema';
+import { TodoSchema } from '@/app/board/_schema';
 import { useState } from 'react';
-import { addCategory, addTodo } from '@/app/board/_actions/board.actions';
+import { addTodo } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 
 const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
@@ -44,17 +44,20 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
 
   const form = useForm<z.infer<typeof TodoSchema>>({
     resolver: zodResolver(TodoSchema),
+    defaultValues: {
+      title: '',
+      description: '',
+    }
   })
 
   const onSubmit = async(values: z.infer<typeof TodoSchema>) => {
     const data = {
       ...values,
+      expiryDate: format(values.expiryDate,'yyyy-MM-dd'),
       categoryId
     }
 
-    const result = await addTodo(data);
-    const { error } = JSON.parse(result);
-    console.log('Log Here Result: ', result);
+    const { error } = await addTodo(data);
 
     if (error?.message) {
       toast({

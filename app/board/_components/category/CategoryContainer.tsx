@@ -1,7 +1,12 @@
 import CategoryForm from '../../_components/category/CategoryForm';
 import CategoryItem from '../../_components/category/CategoryItem';
+import { CategoryWithTodos } from '@/app/board/_types';
 
-const CategoryContainer = ({ categoriesWithTodos }: any) => {
+interface Props {
+  categoriesWithTodos: CategoryWithTodos[];
+}
+
+const CategoryContainer = ({ categoriesWithTodos }: Props) => {
   return (
     <ol className="flex h-full gap-x-3">
       {categoriesWithTodos.map((category: any) => {
