@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,12 +23,15 @@ import * as z from 'zod';
 import { cn } from '@/lib/utils';
 import { addDays, format, isBefore } from 'date-fns';
 import { TodoSchema } from '@/app/board/_schema';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { addTodo } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { BoardContext } from '@/app/board/_contexts';
 
 const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const {  categories } = useContext(BoardContext);
 
   const oneDayBefore = addDays(new Date(), -1);
 
@@ -44,7 +47,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
     const data = {
       ...values,
       expiryDate: format(values.expiryDate, 'yyyy-MM-dd'),
-      categoryId,
+      categoryId: values.category
     };
 
     const { error } = await addTodo(data);
@@ -73,12 +76,33 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
   return (
     <>
       <Dialog open={isOpen} onOpenChange={handleCloseDialog}>
-        <DialogContent>
+        <DialogContent onOpenAutoFocus={e => e.preventDefault()}>
           <DialogHeader className="mb-5">
             <DialogTitle>Add Todo</DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={categoryId}>
+                      <FormControl>
+                        <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map(category => (
+                          <SelectItem key={category.id} value={category.id}>{category.title}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="title"
@@ -88,6 +112,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                     <FormControl>
                       <Input placeholder="Enter a title..." {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -95,11 +120,12 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem >
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Add a more details description..." {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -141,6 +167,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                         />
                       </PopoverContent>
                     </Popover>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

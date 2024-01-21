@@ -41,7 +41,7 @@ const Todo = async () => {
 
   return (
     <div className="h-full overflow-x-auto p-4">
-      <CategoryContainer data={data} updateTodoCategory={updateTodoCategory} updateToDo />
+      <CategoryContainer data={data} updateTodoCategory={updateTodoCategory} />
     </div>
   );
 };

@@ -6,17 +6,14 @@ export const CategorySchema: ZodType<CategoryFormData> = z.object({
 });
 
 export const TodoSchema: ZodType<TodoFormData> = z.object({
-  title: z
-    .string({
-      required_error: 'Title is required',
-      invalid_type_error: 'Title is required',
-    })
+  title: z.string()
     .min(3, {
-      message: 'Title is too short.',
+      message: 'Title is required',
     }),
-  description: z.string({
-    required_error: 'Description is required',
-    invalid_type_error: 'Description is required',
+  category: z.string(),
+  description: z.string()
+    .min(1, {
+    message: 'Description is required'
   }),
   expiryDate: z.date({
     required_error: 'Expiry date is required',

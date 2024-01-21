@@ -4,8 +4,11 @@ import TodoItem from '@/app/board/_components/todos/TodoItem';
 import TodoCreate from '@/app/board/_components/todos/TodoCreate';
 import { useState } from 'react';
 import { getDaysRemaining } from '@/app/board/_utils';
+import TodoDetails from '@/app/board/_components/todos/details-dialog';
+import { Todo } from '@/app/board/_types';
 
 const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
+  const [selectedTodo, setSelectedTodo] = useState<Todo>();
   const { title, id: categoryId } = categoryWithTodos;
 
   const todos = categoryWithTodos.todos.map((todo: any) => {
@@ -16,6 +19,7 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
   });
 
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
+  const [isTodoEditDialogOpen, setTodoEditDialogOpen] = useState(false);
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -23,6 +27,11 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
 
   const handleTodoCreateDialogToggle = (isOpen: boolean) => {
     setTodoCreateDialogOpen(isOpen);
+  };
+
+  const handleTodoEditDialogToggle = (isOpen: boolean, todo: Todo) => {
+    setTodoEditDialogOpen(isOpen);
+    setSelectedTodo(todo);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -52,6 +61,7 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
                   key={todo.id}
                   daysRemaining={todo.daysRemaining}
                   handleDragging={handleDragging}
+                  handleTodoEditDialogToggle={handleTodoEditDialogToggle}
                 />
               ))}
             </ol>
@@ -68,6 +78,7 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
       </li>
 
       <TodoCreate isOpen={isTodoCreateDialogOpen} onToggle={handleTodoCreateDialogToggle} categoryId={categoryId} />
+      <TodoDetails isOpen={isTodoEditDialogOpen} onToggle={handleTodoEditDialogToggle} todo={selectedTodo} categoryTitle={title} />
     </>
   );
 };
