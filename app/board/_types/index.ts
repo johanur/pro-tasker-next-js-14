@@ -6,6 +6,7 @@ export interface CategoryFormData {
 
 export interface TodoFormData {
   title: string;
+  category: string;
   description: string;
   expiryDate: Date;
 }

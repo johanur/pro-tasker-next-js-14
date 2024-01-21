@@ -51,9 +51,9 @@ const CategorySelect = ({ todo, categoryTitle }: any) => {
                       <FormField
                         control={form.control}
                         name="category"
-                        render={({ field }) => (
+                        render={({ field }) =>  (
                           <FormItem>
-                            <Select onValueChange={field.onChange} value={todo.category_id}>
+                            <Select onValueChange={field.onChange} defaultValue={todo.category_id}>
                               <FormControl>
                                 <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                                   <SelectValue />
