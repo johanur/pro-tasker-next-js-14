@@ -4,5 +4,5 @@ import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const { data } = await readUserSession();
-  data.session ? redirect('/todo') : redirect('/login');
+  data.session ? redirect('/board') : redirect('/login');
 }

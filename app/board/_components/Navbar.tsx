@@ -1,4 +1,4 @@
-import Logout from '@/app/todo/_components/Logout';
+import Logout from '@/app/board/_components/Logout';
 
 const Navbar = () => {
   return (

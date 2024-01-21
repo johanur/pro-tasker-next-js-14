@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { ElementRef, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CategorySchema } from '@/app/todo/_schema/category.schema';
-import { CategoryFormData } from '@/app/todo/_types/category';
+import { CategorySchema } from '@/app/board/_schema/category.schema';
+import { CategoryFormData } from '@/app/board/_types/category';
 
 type Inputs = z.infer<typeof CategorySchema>;
 

@@ -32,7 +32,7 @@ import { Calendar } from "@/components/ui/calendar"
 import * as z from "zod"
 import { cn } from '@/lib/utils';
 import { addDays, format, isBefore } from 'date-fns';
-import { TodoSchema } from '@/app/todo/_schema/todo.schema';
+import { TodoSchema } from '@/app/board/_schema/todo.schema';
 import { useState } from 'react';
 
 const TodoCreate = ({ isOpen, onToggle }: any) => {

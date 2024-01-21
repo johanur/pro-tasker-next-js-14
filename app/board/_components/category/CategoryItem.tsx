@@ -1,7 +1,7 @@
 'use client';
 
-import TodoItem from '@/app/todo/_components/todos/TodoItem';
-import TodoCreate from '@/app/todo/_components/todos/TodoCreate';
+import TodoItem from '@/app/board/_components/todos/TodoItem';
+import TodoCreate from '@/app/board/_components/todos/TodoCreate';
 import { useState } from 'react';
 
 interface Props {

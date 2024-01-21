@@ -5,7 +5,7 @@ import RegisterForm from '../_components/RegisterForm';
 const Register = async () => {
   const { data } = await readUserSession();
   if (data.session) {
-    return redirect('/todo');
+    return redirect('/board');
   }
   return <RegisterForm />;
 };

@@ -5,7 +5,7 @@ import LoginForm from '../_components/LoginForm';
 const Login = async () => {
   const { data } = await readUserSession();
   if (data.session) {
-    return redirect('/todo');
+    return redirect('/board');
   }
   return <LoginForm />;
 };
