@@ -3,10 +3,19 @@
 import TodoItem from '@/app/board/_components/todos/TodoItem';
 import TodoCreate from '@/app/board/_components/todos/TodoCreate';
 import { useState } from 'react';
+import { getDaysRemaining } from '@/app/board/_utils';
 
 
 const CategoryItem = ({ categoryWithTodos }: any) => {
-  const { todos, title, id: categoryId } = categoryWithTodos;
+  const { title, id: categoryId } = categoryWithTodos;
+
+  const todos = categoryWithTodos.todos.map((todo: any) => {
+    return {
+      ...todo,
+      daysRemaining: getDaysRemaining(todo.expire_date)
+    }
+  })
+
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
   const [isDragging, setIsDragging] = useState(false)
@@ -39,11 +48,12 @@ const CategoryItem = ({ categoryWithTodos }: any) => {
                onDragOver={handleDragOver}>
             <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5" >
               {todos.map((todo: any) => (
-                <TodoItem todo={todo} key={todo.id} handleDragging={handleDragging}
+                <TodoItem todo={todo} key={todo.id} daysRemaining={todo.daysRemaining} handleDragging={handleDragging}
                 />
               ))}
             </ol>
           </div>
+
 
           <div className="px-2 pt-2">
             <button
