@@ -12,7 +12,7 @@ const TodoDetails = ({ isOpen, onToggle, todo }: any) => {
   return (
     <>
       <Dialog  open={isOpen} onOpenChange={handleCloseDialog}>
-        <DialogContent className="max-w-xl gap-6" onOpenAutoFocus={e => e.preventDefault()}>
+        <DialogContent className="max-w-xl gap-4" onOpenAutoFocus={e => e.preventDefault()}>
           {todo && (<Header todo={todo} />)}
           {todo && (<CategorySelect todo={todo} />)}
           {todo && (<ExpiryDatepicker todo={todo} />)}
