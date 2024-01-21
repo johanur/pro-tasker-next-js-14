@@ -1,3 +1,5 @@
+import { DayRemaining } from '@/app/board/_enums';
+
 export interface CategoryFormData {
   title: string;
 }
@@ -10,7 +12,7 @@ export interface TodoFormData {
 
 
 export interface ExpiryDateBadgeProps {
-  daysRemaining: number;
+  daysRemaining: DayRemaining;
 }
 
 export interface BadgeInfo {
