@@ -7,25 +7,35 @@ import { CategoryWithTodos } from '@/app/board/_types';
 export async function getCategoriesWithTodos(): Promise<PostgrestSingleResponse<CategoryWithTodos[]>> {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return supabase.from("category").select('*, todos:todo(*)');
+  return supabase.from('category').select('*, todos:todo(*)');
 }
 
 export async function addCategory(title: string): Promise<PostgrestSingleResponse<void>> {
   const supabase = await createSupabaseServerClient();
-  const result = await supabase.from("category").insert({ title }).single();
-  revalidatePath("/board");
+  const result = await supabase.from('category').insert({ title }).single();
+  revalidatePath('/board');
   return result;
 }
 
-export async function addTodo(todo: { title: string, description: string, expiryDate: string, categoryId: string }): Promise<PostgrestSingleResponse<void>> {
+export async function addTodo(todo: {
+  title: string;
+  description: string;
+  expiryDate: string;
+  categoryId: string;
+}): Promise<PostgrestSingleResponse<void>> {
   const supabase = await createSupabaseServerClient();
   const payload = {
     title: todo.title,
     description: todo.description,
     expire_date: todo.expiryDate,
-    category_id: todo.categoryId
-  }
-  const result = await supabase.from("todo").insert(payload).single()
-  revalidatePath("/board");
+    category_id: todo.categoryId,
+  };
+  const result = await supabase.from('todo').insert(payload).single();
+  revalidatePath('/board');
   return result;
+}
+
+export async function updateTodoCategoryId(todoId: string, categoryId: string) {
+  const supabase = await createSupabaseServerClient();
+  return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
 }

@@ -4,4 +4,3 @@ export enum DayRemaining {
   Today = 0,
   Expired = -1,
 }
-

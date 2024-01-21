@@ -5,22 +5,21 @@ import TodoCreate from '@/app/board/_components/todos/TodoCreate';
 import { useState } from 'react';
 import { getDaysRemaining } from '@/app/board/_utils';
 
-
-const CategoryItem = ({ categoryWithTodos }: any) => {
+const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
   const { title, id: categoryId } = categoryWithTodos;
 
   const todos = categoryWithTodos.todos.map((todo: any) => {
     return {
       ...todo,
-      daysRemaining: getDaysRemaining(todo.expire_date)
-    }
-  })
+      daysRemaining: getDaysRemaining(todo.expire_date),
+    };
+  });
 
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
-  const [isDragging, setIsDragging] = useState(false)
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleDragging = (dragging: boolean) => setIsDragging(dragging)
+  const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
   const handleTodoCreateDialogToggle = (isOpen: boolean) => {
     setTodoCreateDialogOpen(isOpen);
@@ -28,11 +27,12 @@ const CategoryItem = ({ categoryWithTodos }: any) => {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    // console.log('Log Here categgory: ',categoryWithTodos);
-    handleDragging(false)
-  }
+    const todoId = e.dataTransfer.getData('text');
+    handleUpdateList(todoId, categoryId);
+    handleDragging(false);
+  };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
   return (
     <>
@@ -44,23 +44,25 @@ const CategoryItem = ({ categoryWithTodos }: any) => {
             <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">{title}</div>
           </div>
 
-          <div onDrop={handleDrop}
-               onDragOver={handleDragOver}>
-            <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5" >
+          <div onDrop={handleDrop} onDragOver={handleDragOver}>
+            <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5">
               {todos.map((todo: any) => (
-                <TodoItem todo={todo} key={todo.id} daysRemaining={todo.daysRemaining} handleDragging={handleDragging}
+                <TodoItem
+                  todo={todo}
+                  key={todo.id}
+                  daysRemaining={todo.daysRemaining}
+                  handleDragging={handleDragging}
                 />
               ))}
             </ol>
-          </div>
 
-
-          <div className="px-2 pt-2">
-            <button
-              className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
-              onClick={() => handleTodoCreateDialogToggle(true)}>
-              + Add a card
-            </button>
+            <div className="px-2 pt-2">
+              <button
+                className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
+                onClick={() => handleTodoCreateDialogToggle(true)}>
+                + Add a card
+              </button>
+            </div>
           </div>
         </div>
       </li>

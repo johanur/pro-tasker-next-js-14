@@ -4,10 +4,10 @@ import { DayRemainingAndColorMap, DayRemainingAndStatusMap } from '@/app/board/_
 
 const ExpiryDateBadge = ({ daysRemaining }: ExpiryDateBadgeProps) => {
   return (
-    <Badge variant="custom" className={`rounded-sm mt-2 ${DayRemainingAndColorMap[daysRemaining]}`}>
+    <Badge variant="custom" className={`mt-2 rounded-sm ${DayRemainingAndColorMap[daysRemaining]}`}>
       {DayRemainingAndStatusMap[daysRemaining]}
     </Badge>
-  )
-}
+  );
+};
 
 export default ExpiryDateBadge;

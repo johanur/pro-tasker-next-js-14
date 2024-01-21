@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CategorySchema } from '@/app/board/_schema';
 import { CategoryFormData } from '@/app/board/_types';
-import { addCategory } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
+import { addCategory } from '@/app/board/_actions';
 
 type Inputs = z.infer<typeof CategorySchema>;
 
@@ -63,19 +63,19 @@ const CategoryForm = () => {
   const submitCategory = async (data: CategoryFormData) => {
     const { error } = await addCategory(data.title);
 
-    if (error?.message) {
+    if (error) {
       toast({
         duration: 4000,
-        variant: "destructive",
-        title: "Failed to create Category",
-        description: "There was an error while saving the new category. Please try again later.",
-      })
+        variant: 'destructive',
+        title: 'Failed to create Category',
+        description: 'There was an error while saving the new category. Please try again later.',
+      });
     } else {
       toast({
         duration: 4000,
-        title: "Category Added Successfully",
-        description: "The new category has been added successfully!",
-      })
+        title: 'Category Added Successfully',
+        description: 'The new category has been added successfully!',
+      });
       disableEditing();
       resetForm();
     }
@@ -92,7 +92,7 @@ const CategoryForm = () => {
             <input
               id="title"
               type="text"
-              className="hover:border-input focus:border-input h-8 w-full rounded-md border-2 px-2 py-1 text-sm font-medium transition"
+              className="h-8 w-full rounded-md border-2 px-2 py-1 text-sm font-medium transition hover:border-input focus:border-input"
               placeholder="Enter category title..."
               {...register('title')}
             />
