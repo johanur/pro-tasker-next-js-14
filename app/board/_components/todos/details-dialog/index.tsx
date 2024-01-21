@@ -17,19 +17,6 @@ const TodoDetails = ({ isOpen, onToggle, todo, categoryTitle, categories }: any)
           {todo && (<CategorySelect todo={todo} categoryTitle={categoryTitle} />)}
           {todo && (<ExpiryDatepicker todo={todo} />)}
           {todo && (<Description todo={todo} />)}
-
-          {/*<div className="grid grid-cols-1 md:grid-cols-8 md:gap-6">*/}
-          {/*  <div className="col-span-4">*/}
-          {/*    <div className="w-full space-y-6">*/}
-          {/*      {todo && (<CategorySelect todo={todo} />)}*/}
-
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*  <div className="col-span-4">*/}
-          {/*    <div className="w-full">*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
         </DialogContent>
       </Dialog>
     </>

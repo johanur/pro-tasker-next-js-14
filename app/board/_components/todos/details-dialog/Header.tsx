@@ -1,15 +1,10 @@
-import { Calendar as CalendarIcon, Layout } from 'lucide-react';
+import { Layout } from 'lucide-react';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
-import { addTodo } from '@/app/board/_actions';
-import { toast } from '@/components/ui/use-toast';
-import { Todo, TodoFormData } from '@/app/board/_types';
 import { ZodType } from 'zod';
-import { useRef } from 'react';
 import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
 
 const schema: ZodType<any> = z.object({
@@ -40,7 +35,7 @@ const Header = ({ todo }: any) => {
 
   return (
     <div className="mb-6 flex w-full items-start gap-x-3">
-      <Layout className="mt-1 h-5 w-5 text-neutral-700 mt-2.5" />
+      <Layout className="h-5 w-5 text-neutral-700 mt-2.5" />
       <div className="w-full">
         <Form {...form}>
           <FormField
