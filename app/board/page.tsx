@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import readUserSession from '@/lib/actions/user-session.action';
 import CategoryContainer from './_components/category/CategoryContainer';
-import { getCategories } from '@/app/board/_actions/category.actions';
+import { getCategories } from '@/app/board/_actions/board.actions';
 
 const Todo = async () => {
   const { data } = await readUserSession();

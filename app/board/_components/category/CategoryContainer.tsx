@@ -1,6 +1,6 @@
 import CategoryForm from '../../_components/category/CategoryForm';
 import CategoryItem from '../../_components/category/CategoryItem';
-import { getCategories } from '@/app/board/_actions/category.actions';
+import { getCategories } from '@/app/board/_actions/board.actions';
 
 const CategoryContainer = ({ categories }: any) => {
   return (

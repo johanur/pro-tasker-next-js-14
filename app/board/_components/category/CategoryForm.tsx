@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CategorySchema } from '@/app/board/_schema/category.schema';
 import { CategoryFormData } from '@/app/board/_types/category';
-import { addCategory } from '@/app/board/_actions/category.actions';
+import { addCategory } from '@/app/board/_actions/board.actions';
 import { toast } from '@/components/ui/use-toast';
 
 type Inputs = z.infer<typeof CategorySchema>;
