@@ -5,8 +5,7 @@ const BackgroundImage = () => {
     <Image
       src="/images/background.jpg"
       alt="background-image"
-      layout="full"
-      objectFit="cover"
+      className="object-cover"
       fill={true}
       style={{ zIndex: -1 }}
     />
