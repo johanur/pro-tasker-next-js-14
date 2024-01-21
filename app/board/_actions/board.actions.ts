@@ -2,10 +2,10 @@
 import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import createSupabaseServerClient from '@/lib/supabase/server';
 
-export async function getCategories() {
+export async function getCategoriesWithTodos() {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return await supabase.from("category").select("*");
+  return supabase.from("category").select('*, todos:todo(*)');
 }
 
 export async function addCategory(title: string) {

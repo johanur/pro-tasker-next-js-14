@@ -4,13 +4,10 @@ import TodoItem from '@/app/board/_components/todos/TodoItem';
 import TodoCreate from '@/app/board/_components/todos/TodoCreate';
 import { useState } from 'react';
 
-interface Props {
-  category: any;
-}
-const CategoryItem = ({ category }: Props) => {
-  const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
-  const todos = [];
+const CategoryItem = ({ categoryWithTodos }: any) => {
+  const { todos, title } = categoryWithTodos;
+  const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
 
   const [isDragging, setIsDragging] = useState(false)
 
@@ -22,7 +19,7 @@ const CategoryItem = ({ category }: Props) => {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    console.log('Log Here categgory: ',category);
+    // console.log('Log Here categgory: ',categoryWithTodos);
     handleDragging(false)
   }
 
@@ -35,13 +32,13 @@ const CategoryItem = ({ category }: Props) => {
       <li className="h-full w-[272px] shrink-0 select-none">
         <div className="w-full rounded-md bg-[#f1f2f4] pb-2 shadow-md">
           <div className="items-start- flex justify-between gap-x-2 px-2 pt-2 text-sm font-semibold">
-            <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">{category.title}</div>
+            <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">{title}</div>
           </div>
 
           <div onDrop={handleDrop}
                onDragOver={handleDragOver}>
             <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5" >
-              {todos.map(todo => (
+              {todos.map((todo: any) => (
                 <TodoItem todo={todo} key={todo.id} handleDragging={handleDragging}
                 />
               ))}

@@ -1,12 +1,11 @@
 import CategoryForm from '../../_components/category/CategoryForm';
 import CategoryItem from '../../_components/category/CategoryItem';
-import { getCategories } from '@/app/board/_actions/board.actions';
 
-const CategoryContainer = ({ categories }: any) => {
+const CategoryContainer = ({ categoriesWithTodos }: any) => {
   return (
     <ol className="flex h-full gap-x-3">
-      {categories.map((category: any) => {
-        return <CategoryItem key={category.id} category={category} />;
+      {categoriesWithTodos.map((category: any) => {
+        return <CategoryItem key={category.id} categoryWithTodos={category} />;
       })}
       <CategoryForm />
       <div className="w-1 flex-shrink-0" />
