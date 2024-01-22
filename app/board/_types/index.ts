@@ -67,3 +67,14 @@ export interface TodoCreateProps {
   categoryId: string;
   onToggle: (isOpen: boolean) => void;
 }
+
+export interface TodoDetailsProps {
+  isOpen: boolean;
+  onToggle: (isOpen: boolean) => void;
+  todo: ExtendedTodo;
+}
+
+export interface TodoDetailsComponentsProps {
+  todo: ExtendedTodo;
+  handleTodoUpdate: (todo: Todo) => void;
+}
