@@ -48,7 +48,7 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
       <TodoCreate />
 
       <li className="h-full w-[272px] shrink-0 select-none">
-        <div className="w-full rounded-md bg-[#f1f2f4] pb-2 shadow-md">
+        <div className="w-full rounded-xl bg-[#f1f2f4] pb-2 shadow-md">
           <div className="items-start- flex justify-between gap-x-2 px-2 pt-2 text-sm font-semibold">
             <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">{title}</div>
           </div>

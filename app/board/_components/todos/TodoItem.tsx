@@ -16,7 +16,7 @@ const TodoItem = ({ todo, handleDragging, daysRemaining, handleTodoEditDialogTog
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onClick={() => handleTodoEditDialogToggle(true, todo)}
-        className="flex flex-col items-start truncate rounded-md border-2 border-transparent bg-white px-3 py-2 text-sm shadow-sm hover:border-black">
+        className="flex flex-col items-start truncate rounded-lg border-2 border-transparent bg-white px-3 py-2 text-sm shadow-md hover:border-black">
         {todo.title}
         {daysRemaining <= 2 && <ExpiryDateBadge daysRemaining={daysRemaining} />}
       </div>
