@@ -1,4 +1,8 @@
 import { DayRemaining } from '@/app/board/_enums';
+import { z } from 'zod';
+import { CategorySchema } from '@/app/board/_schema';
+
+export type AddCategorySchema = z.infer<typeof CategorySchema>;
 
 export interface CategoryFormData {
   title: string;
