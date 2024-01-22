@@ -8,6 +8,8 @@ import { CategorySchema } from '@/app/board/_schema';
 import { CategoryFormData } from '@/app/board/_types';
 import { toast } from '@/components/ui/use-toast';
 import { addCategory } from '@/app/board/_actions';
+import { Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 type Inputs = z.infer<typeof CategorySchema>;
 
@@ -119,11 +121,13 @@ const CategoryForm = () => {
 
   return (
     <li className="h-full w-[272px] shrink-0 select-none">
-      <button
+      <Button
         onClick={enableEditing}
-        className="flex w-full items-center rounded-md bg-white/95 p-3 text-sm font-medium transition hover:bg-white/85">
+        variant="ghost"
+        className="flex justify-start w-full items-center rounded-md bg-white/95 p-3 text-sm font-medium transition hover:bg-white/85">
+        <Plus  className="h-4 w-4 mr-2" />
         Add category
-      </button>
+      </Button>
     </li>
   );
 };
