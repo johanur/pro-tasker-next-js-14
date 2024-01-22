@@ -1,25 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Blocks, Check, Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { ZodType } from 'zod';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BoardContext } from '@/app/board/_contexts';
-import { Todo } from '@/app/board/_types';
+import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
 import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
+import { CategorySelectSchema } from '@/app/board/_schema';
 
-const schema: ZodType<any> = z.object({
-  category: z.string(),
-});
-const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
+
+const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const { categories } = useContext(BoardContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [categoryTitle, setCategoryTitle] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const categoryDetails = categories.find(category => category.id === todo.category_id);
@@ -30,8 +30,8 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
     setCategoryTitle(categoryDetails.title);
   }, [todo]);
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof CategorySelectSchema>>({
+    resolver: zodResolver(CategorySelectSchema),
   });
 
   const disableEditing = () => {
@@ -41,10 +41,12 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
     setIsEditing(true);
   };
 
-  const onSubmit = async ({ category: categoryId }: z.infer<typeof schema>) => {
+  const onSubmit = async ({ category: categoryId }: z.infer<typeof CategorySelectSchema>) => {
     if (categoryId === todo.category_id) {
       return;
     }
+
+    setIsSubmitting(true);
 
     const details: Pick<Todo, 'id' | 'category_id'> = {
       id: todo.id,
@@ -55,20 +57,20 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
 
     if (error) {
       toast({
-        duration: 4000,
         variant: 'destructive',
         title: 'Failed to update category',
         description: 'There was an error while updating the category. Please try again later',
       });
     } else {
       toast({
-        duration: 4000,
         title: 'Category updated successfully',
         description: 'The new category has been updated successfully!',
       });
       handleTodoUpdate(data);
       disableEditing();
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -89,7 +91,7 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
                       name="category"
                       render={({ field }) => (
                         <FormItem>
-                          <Select onValueChange={field.onChange} defaultValue={todo.category_id}>
+                          <Select disabled={isSubmitting} onValueChange={field.onChange} defaultValue={todo.category_id}>
                             <FormControl>
                               <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                                 <SelectValue />
@@ -107,10 +109,10 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
                       )}
                     />
                   </div>
-                  <Button type="submit" className="bg-transparent p-0 hover:bg-transparent">
+                  <Button disabled={isSubmitting} type="submit" className="bg-transparent p-0 hover:bg-transparent">
                     <Check className="text-black" size={20} />
                   </Button>
-                  <Button className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
                     <X className="text-black" size={20} />
                   </Button>
                 </div>

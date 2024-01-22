@@ -34,3 +34,7 @@ export const TodoTitleSchema: ZodType<{ title: string }> = z.object({
 export const ExpiryDateSchema: ZodType<{ expiryDate: Date }> = z.object({
   expiryDate: z.date(),
 });
+
+export const CategorySelectSchema: ZodType<{ category: string }> = z.object({
+  category: z.string(),
+});
