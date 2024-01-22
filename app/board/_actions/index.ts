@@ -40,9 +40,9 @@ export async function updateTodoCategoryId(todoId: string, categoryId: string) {
   return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
 }
 
-export async function updateTodoDetails(todo: Partial<any>) {
+export async function updateTodoDetails(todo: Partial<any>): Promise<PostgrestSingleResponse<Todo>> {
   const supabase = await createSupabaseServerClient();
-  const result = await supabase.from('todo').update({ ...todo }).eq('id', todo.id);
+  const result = await supabase.from('todo').update({ ...todo }).eq('id', todo.id).select().single();
   revalidatePath('/board');
   return result;
 }

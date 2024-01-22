@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,14 +15,23 @@ import { toast } from '@/components/ui/use-toast';
 const schema: ZodType<any> = z.object({
   category: z.string(),
 });
-const CategorySelect = ({ todo, categoryTitle }: any) => {
+const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
   const {  categories } = useContext(BoardContext);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [categoryTitle, setCategoryTitle] = useState('');
+
+  useEffect(() => {
+    const categoryDetails = categories.find(category => category.id === todo.category_id);
+    if (!categoryDetails) {
+      return;
+    }
+
+    setCategoryTitle(categoryDetails.title);
+  }, [todo]);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-
   });
 
   const disableEditing = () => {
@@ -42,7 +51,7 @@ const CategorySelect = ({ todo, categoryTitle }: any) => {
       category_id: categoryId,
     }
 
-    const { error } = await updateTodoDetails(details);
+    const { error, data } = await updateTodoDetails(details);
 
     if (error) {
       toast({
@@ -57,6 +66,7 @@ const CategorySelect = ({ todo, categoryTitle }: any) => {
         title: 'Category updated successfully',
         description: 'The new category has been updated successfully!',
       });
+      handleTodoUpdate(data);
       disableEditing();
     }
   }

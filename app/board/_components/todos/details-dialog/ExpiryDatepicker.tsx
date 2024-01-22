@@ -20,7 +20,7 @@ const schema: ZodType<any> = z.object({
     invalid_type_error: 'Expiry date is required',
   }),
 });
-const ExpiryDatepicker = ({ todo }: any) => {
+const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const oneDayBefore = addDays(new Date(), -1);
@@ -53,7 +53,7 @@ const ExpiryDatepicker = ({ todo }: any) => {
       expire_date: date,
     }
 
-    const { error } = await updateTodoDetails(details);
+    const { error, data } = await updateTodoDetails(details);
 
     if (error) {
       toast({
@@ -68,6 +68,7 @@ const ExpiryDatepicker = ({ todo }: any) => {
         title: 'Expire date updated successfully',
         description: 'The new expire date has been updated successfully!',
       });
+      handleTodoUpdate(data);
       disableEditing();
     }
   }

@@ -21,7 +21,7 @@ const schema: ZodType<any> = z.object({
     }),
 });
 
-const Header = ({ todo }: any) => {
+const Header = ({ todo, handleTodoUpdate }: any) => {
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -36,12 +36,12 @@ const Header = ({ todo }: any) => {
       return;
     }
 
-    const data: Pick<Todo, 'title' | 'id'> = {
+    const details: Pick<Todo, 'title' | 'id'> = {
       title: title,
       id: todo.id,
     }
 
-    const { error } = await updateTodoDetails(data);
+    const { data, error } = await updateTodoDetails(details);
 
     if (error) {
       toast({
@@ -50,13 +50,15 @@ const Header = ({ todo }: any) => {
         title: 'Failed to update title',
         description: 'There was an error while updating the title. Please try again later',
       });
-    } else {
-      toast({
-        duration: 4000,
-        title: 'Title updated successfully',
-        description: 'The new title has been updated successfully!',
-      });
+      return;
     }
+
+    handleTodoUpdate(data);
+    toast({
+      duration: 4000,
+      title: 'Title updated successfully',
+      description: 'The new title has been updated successfully!',
+    });
   };
 
 

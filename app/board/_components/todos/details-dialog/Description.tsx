@@ -17,7 +17,7 @@ const schema: ZodType<any> = z.object({
     invalid_type_error: 'Description is required',
   }),
 });
-const Description = ({ todo }: any) => {
+const Description = ({ todo, handleTodoUpdate }: any) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const form = useForm<z.infer<typeof schema>>({
@@ -43,7 +43,7 @@ const Description = ({ todo }: any) => {
     const { id } = todo;
     const details: Pick<Todo, 'id' | 'description'> = { id, description }
 
-    const { error } = await updateTodoDetails(details);
+    const { error, data } = await updateTodoDetails(details);
 
     if (error) {
       toast({
@@ -58,10 +58,10 @@ const Description = ({ todo }: any) => {
         title: 'Description updated successfully',
         description: 'The new description has been updated successfully!',
       });
+      handleTodoUpdate(data);
       disableEditing();
     }
 
-    console.log('Log Here Not Same');
 
   }
 
