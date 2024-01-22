@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
 import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
-import { updateTodoDetails, updateTodoExpiryDate, updateTodoTitle } from '@/app/board/_actions';
+import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 import { Todo } from '@/app/board/_types';
 

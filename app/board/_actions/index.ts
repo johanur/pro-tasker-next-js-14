@@ -40,23 +40,10 @@ export async function updateTodoCategoryId(todoId: string, categoryId: string) {
   return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
 }
 
-export async function updateTodoDetails(todo: Partial<Todo>) {
+export async function updateTodoDetails(todo: Partial<any>) {
   const supabase = await createSupabaseServerClient();
   const result = await supabase.from('todo').update({ ...todo }).eq('id', todo.id);
   revalidatePath('/board');
   return result;
 }
 
-export async function updateTodoTitle(title: string, todoId: string) {
-  const supabase = await createSupabaseServerClient();
-  const result = await supabase.from('todo').update({ title }).eq('id', todoId);
-  revalidatePath('/board');
-  return result;
-}
-
-export async function updateTodoExpiryDate(expiryDate: string, todoId: string) {
-  const supabase = await createSupabaseServerClient();
-  const result = await supabase.from('todo').update({ expire_date: expiryDate }).eq('id', todoId);
-  revalidatePath('/board');
-  return result;
-}

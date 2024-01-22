@@ -10,8 +10,9 @@ import { addDays, format, isBefore } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
-import { updateTodoExpiryDate } from '@/app/board/_actions';
+import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
+import { Todo } from '@/app/board/_types';
 
 const schema: ZodType<any> = z.object({
   expiryDate: z.date({
@@ -43,7 +44,16 @@ const ExpiryDatepicker = ({ todo }: any) => {
   const onSubmit = async ({ expiryDate }: z.infer<typeof schema>) => {
     const date = format(expiryDate, 'yyyy-MM-dd');
 
-    const { error } = await updateTodoExpiryDate(date, todo.id);
+    if (date === todo.expire_date) {
+      return;
+    }
+
+    const details: Pick<Todo, 'id' | 'expire_date'> = {
+      id: todo.id,
+      expire_date: date,
+    }
+
+    const { error } = await updateTodoDetails(details);
 
     if (error) {
       toast({
