@@ -11,7 +11,7 @@ import { DescriptionRef, Todo } from '@/app/board/_types';
 import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
-import { DRAFT_DESCRIPTION_STORAGE_KEY } from '@/app/board/_contexts';
+import { DRAFT_DESCRIPTION_STORAGE_KEY } from '@/app/board/_constants';
 
 const schema: ZodType<any> = z.object({
   description: z.string({
