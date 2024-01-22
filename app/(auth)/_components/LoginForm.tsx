@@ -83,7 +83,6 @@ const LoginForm = () => {
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
                       {...field}
                       data-1p-ignore
                     />
@@ -101,7 +100,6 @@ const LoginForm = () => {
                     <Input
                       disabled={isSubmitting}
                       type="password"
-                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
                       {...field}
                       data-1p-ignore
                     />
