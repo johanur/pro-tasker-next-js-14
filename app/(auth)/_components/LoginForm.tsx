@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import styles from '../_styles/auth.module.scss';
 import { LoginFormData } from '../_types/form';
-import { LoginSchema } from '../_schema/login.schema';
+import { LoginSchema } from '../_schema';
 import { loginWithEmailAndPassword } from '../_actions';
 
 type Inputs = z.infer<typeof LoginSchema>;
