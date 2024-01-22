@@ -28,6 +28,10 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
       return;
     }
 
+    if (sourceCategory.id === categoryId) {
+      return;
+    }
+
     const todoToMove = sourceCategory.todos.find(todo => todo.id === todoId);
 
     if (!todoToMove) {
