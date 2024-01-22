@@ -8,6 +8,7 @@ import TodoDetails from '@/app/board/_components/todos/details-dialog';
 
 import { getDaysRemaining } from '@/app/board/_utils';
 import { CategoryItemProps, ExtendedTodo, Todo } from '@/app/board/_types';
+import { Button } from '@/components/ui/button';
 
 const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps) => {
   const [selectedTodo, setSelectedTodo] = useState<ExtendedTodo>();
@@ -39,8 +40,6 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps
 
   return (
     <>
-      <TodoCreate />
-
       <li className="h-full w-[272px] shrink-0 select-none">
         <div className="w-full rounded-xl bg-[#f1f2f4] pb-2 shadow-md">
 
@@ -62,11 +61,12 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps
             </ol>
 
             <div className="px-2 pt-2">
-              <button
-                className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
+              <Button
+                variant="link"
+                className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500 hover:no-underline focus-visible:ring-0"
                 onClick={() => handleTodoCreateDialogToggle(true)}>
                 + Add a todo
-              </button>
+              </Button>
             </div>
           </div>
         </div>

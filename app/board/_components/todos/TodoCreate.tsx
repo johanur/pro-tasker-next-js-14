@@ -1,74 +1,80 @@
 'use client';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { useContext, useState } from 'react';
+import { addDays, format, isBefore } from 'date-fns';
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
+import { TodoSchema } from '@/app/board/_schema';
+import { addTodo } from '@/app/board/_actions';
+import { toast } from '@/components/ui/use-toast';
+import { BoardContext } from '@/app/board/_contexts';
+import { AddTodoSchema, TodoCreateProps, TodoFormData } from '@/app/board/_types';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-
-import * as z from 'zod';
 import { cn } from '@/lib/utils';
-import { addDays, format, isBefore } from 'date-fns';
-import { TodoSchema } from '@/app/board/_schema';
-import { useContext, useState } from 'react';
-import { addTodo } from '@/app/board/_actions';
-import { toast } from '@/components/ui/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { BoardContext } from '@/app/board/_contexts';
 
-const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
+
+const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { categories } = useContext(BoardContext);
 
   const oneDayBefore = addDays(new Date(), -1);
 
-  const form = useForm<z.infer<typeof TodoSchema>>({
+  const form = useForm<AddTodoSchema>({
     resolver: zodResolver(TodoSchema),
     defaultValues: {
       title: '',
       description: '',
+      category: categoryId
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof TodoSchema>) => {
-    const data = {
-      ...values,
-      expiryDate: format(values.expiryDate, 'yyyy-MM-dd'),
-      categoryId: values.category,
-    };
+  const onChangeCategory = (categoryId: string) => {
+    form.setValue('category', categoryId);
+  };
 
-    const { error } = await addTodo(data);
+  const onSubmit = async (values: TodoFormData) => {
+    toast({
+      title: 'Creating todo...',
+    });
+
+    setIsSubmitting(true);
+
+    const { error } = await addTodo(values);
 
     if (error?.message) {
       toast({
-        duration: 4000,
         variant: 'destructive',
         title: 'Failed to create todo',
         description: 'There was an error while saving the new todo. Please try again later.',
       });
     } else {
       toast({
-        duration: 4000,
         title: 'Todo Added Successfully',
         description: 'The new todo has been added successfully!',
       });
       handleCloseDialog();
     }
+
+    setIsSubmitting(false);
   };
+
   const handleCloseDialog = () => {
+    if (isSubmitting) {
+      return;
+    }
     form.reset();
     onToggle(false);
   };
@@ -88,7 +94,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={categoryId}>
+                    <Select disabled={isSubmitting} onValueChange={onChangeCategory} defaultValue={categoryId}>
                       <FormControl>
                         <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                           <SelectValue />
@@ -112,7 +118,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter a title..." {...field} />
+                      <Input disabled={isSubmitting} placeholder="Enter a title..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -125,7 +131,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Add a more details description..." {...field} />
+                      <Textarea disabled={isSubmitting} placeholder="Add a more details description..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -142,6 +148,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            disabled={isSubmitting}
                             variant={'outline'}
                             className={cn(
                               'flex w-full justify-start pl-3 font-normal',
@@ -173,10 +180,11 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="h-8 w-1/5 rounded-sm bg-indigo-600">
+              <Button disabled={isSubmitting} type="submit" className="h-8 w-1/5 rounded-sm bg-indigo-600">
                 Submit
               </Button>
               <Button
+                disabled={isSubmitting}
                 type="button"
                 variant="secondary"
                 className="mx-4 h-8 w-1/5 rounded-sm"

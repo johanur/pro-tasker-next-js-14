@@ -6,7 +6,7 @@ export const CategorySchema: ZodType<CategoryFormData> = z.object({
 });
 
 export const TodoSchema: ZodType<TodoFormData> = z.object({
-  title: z.string().min(3, {
+  title: z.string().min(1, {
     message: 'Title is required',
   }),
   category: z.string(),

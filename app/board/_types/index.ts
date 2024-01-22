@@ -1,8 +1,9 @@
 import { DayRemaining } from '@/app/board/_enums';
 import { z } from 'zod';
-import { CategorySchema } from '@/app/board/_schema';
+import { CategorySchema, TodoSchema } from '@/app/board/_schema';
 
 export type AddCategorySchema = z.infer<typeof CategorySchema>;
+export type AddTodoSchema = z.infer<typeof TodoSchema>;
 
 export interface CategoryFormData {
   title: string;
@@ -61,3 +62,8 @@ export interface TodoItemProps {
   handleTodoEditDialogToggle: (isOpen: boolean, todo: ExtendedTodo) => void;
 }
 
+export interface TodoCreateProps {
+  isOpen: boolean;
+  categoryId: string;
+  onToggle: (isOpen: boolean) => void;
+}
