@@ -8,6 +8,9 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { ZodType } from 'zod';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BoardContext } from '@/app/board/_contexts';
+import { Todo } from '@/app/board/_types';
+import { updateTodoDetails } from '@/app/board/_actions';
+import { toast } from '@/components/ui/use-toast';
 
 const schema: ZodType<any> = z.object({
   category: z.string(),
@@ -29,8 +32,33 @@ const CategorySelect = ({ todo, categoryTitle }: any) => {
     setIsEditing(true);
   }
 
-  const onSubmit = (value: any) => {
-    console.log('Log Here value: ', value);
+  const onSubmit = async({ category: categoryId }: z.infer<typeof schema>) => {
+    if (categoryId === todo.category_id) {
+      return;
+    }
+
+    const details: Pick<Todo, 'id' | 'category_id'> = {
+      id: todo.id,
+      category_id: categoryId,
+    }
+
+    const { error } = await updateTodoDetails(details);
+
+    if (error) {
+      toast({
+        duration: 4000,
+        variant: 'destructive',
+        title: 'Failed to update category',
+        description: 'There was an error while updating the category. Please try again later',
+      });
+    } else {
+      toast({
+        duration: 4000,
+        title: 'Category updated successfully',
+        description: 'The new category has been updated successfully!',
+      });
+      disableEditing();
+    }
   }
 
   return (
