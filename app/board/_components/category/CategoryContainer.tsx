@@ -19,7 +19,7 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
     setCategoriesWithTodos(data);
 
     const categoriesWithoutTodos = data.map(({ todos, ...rest }) => rest);
-    setCategories(categoriesWithoutTodos)
+    setCategories(categoriesWithoutTodos);
   }, [data]);
 
   const handleUpdateList = (todoId: string, categoryId: string) => {
@@ -59,9 +59,10 @@ const CategoryContainer = ({ data, updateTodoCategory }: Props) => {
   };
 
   return (
-    <BoardContext.Provider  value={{
-      categories: categories,
-    }}>
+    <BoardContext.Provider
+      value={{
+        categories: categories,
+      }}>
       <ol className="flex h-full gap-x-3">
         {categoriesWithTodos.map((category: any) => {
           return <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />;

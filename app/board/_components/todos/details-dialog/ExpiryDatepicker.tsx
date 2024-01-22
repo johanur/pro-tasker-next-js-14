@@ -34,8 +34,8 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
 
   const enableEditing = () => {
     setIsEditing(true);
-    setIsCalendarOpen(true)
-  }
+    setIsCalendarOpen(true);
+  };
 
   const disableEditing = () => {
     setIsEditing(false);
@@ -51,7 +51,7 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
     const details: Pick<Todo, 'id' | 'expire_date'> = {
       id: todo.id,
       expire_date: date,
-    }
+    };
 
     const { error, data } = await updateTodoDetails(details);
 
@@ -71,81 +71,82 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
       handleTodoUpdate(data);
       disableEditing();
     }
-  }
+  };
 
   return (
-    <div className="flex items-center gap-x-3 w-full h-10 mb-2">
-      <CalendarClock className="h-5 w-5 .5 text-neutral-700" />
-      <div  className="grid grid-cols-8 gap-6 w-full h-full items-center">
+    <div className="mb-2 flex h-10 w-full items-center gap-x-3">
+      <CalendarClock className=".5 h-5 w-5 text-neutral-700" />
+      <div className="grid h-full w-full grid-cols-8 items-center gap-6">
         <div className="col-span-2">
-          <p className="font-semibold text-neutral-700 tx-md">
-            Expire Date
-          </p>
+          <p className="tx-md font-semibold text-neutral-700">Expire Date</p>
         </div>
         <div className="col-span-6 items-center">
-          {isEditing? (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex-grow">
-                  <div className="flex w-full flex-1 gap-2 items-center">
-                    <div className="flex-grow">
-                      <FormField
-                        control={form.control}
-                        name="expiryDate"
-                        render={({ field }) => (
-                          <FormItem>
-                            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={'outline'}
-                                    className={cn(
-                                      'flex w-full justify-start pl-3 font-normal',
-                                      !field.value && 'text-muted-foreground',
-                                    )}>
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                    {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                <div className="m-1 flex">
-                                  <div className="flex-1"></div>
-                                </div>
+          {isEditing ? (
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="flex-grow space-y-8">
+                <div className="flex w-full flex-1 items-center gap-2">
+                  <div className="flex-grow">
+                    <FormField
+                      control={form.control}
+                      name="expiryDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={'outline'}
+                                  className={cn(
+                                    'flex w-full justify-start pl-3 font-normal',
+                                    !field.value && 'text-muted-foreground'
+                                  )}>
+                                  <CalendarIcon className="mr-2 h-4 w-4" />
+                                  {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <div className="m-1 flex">
+                                <div className="flex-1"></div>
+                              </div>
 
-                                <Calendar
-                                  mode="single"
-                                  selected={field.value}
-                                  onSelect={e => {
-                                    field.onChange(e);
-                                    setIsCalendarOpen(false);
-                                  }}
-                                  disabled={date => isBefore(date, oneDayBefore)}
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                      <Button className="bg-transparent hover:bg-transparent p-0">
-                        <Check className="flex-grow-0 text-black" size={20} />
-                      </Button>
-                      <Button className="bg-transparent hover:bg-transparent p-0" onClick={disableEditing}>
-                        <X className="flex-grow-0 text-black" size={20} />
-                      </Button>
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={e => {
+                                  field.onChange(e);
+                                  setIsCalendarOpen(false);
+                                }}
+                                disabled={date => isBefore(date, oneDayBefore)}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </FormItem>
+                      )}
+                    />
                   </div>
-                </form>
-              </Form>
-            ) : (
-            <div role="button" onClick={enableEditing} className="font-normal text-sm hover:bg-neutral-200 hover:py-0.5">
+                  <Button className="bg-transparent p-0 hover:bg-transparent">
+                    <Check className="flex-grow-0 text-black" size={20} />
+                  </Button>
+                  <Button className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                    <X className="flex-grow-0 text-black" size={20} />
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          ) : (
+            <div
+              role="button"
+              onClick={enableEditing}
+              className="text-sm font-normal hover:bg-neutral-200 hover:py-0.5">
               {format(todo.expire_date, 'PPP')}
             </div>
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ExpiryDatepicker;

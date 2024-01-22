@@ -124,8 +124,8 @@ const CategoryForm = () => {
       <Button
         onClick={enableEditing}
         variant="ghost"
-        className="flex justify-start w-full items-center rounded-md bg-white/95 p-3 text-sm font-medium transition hover:bg-white/85">
-        <Plus  className="h-4 w-4 mr-2" />
+        className="flex w-full items-center justify-start rounded-md bg-white/95 p-3 text-sm font-medium transition hover:bg-white/85">
+        <Plus className="mr-2 h-4 w-4" />
         Add category
       </Button>
     </li>

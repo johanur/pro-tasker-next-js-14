@@ -11,16 +11,16 @@ const TodoDetails = ({ isOpen, onToggle, todo, categoryTitle }: any) => {
   const [todoDetails, setTodoDetails] = useState(todo);
 
   useEffect(() => {
-    setTodoDetails(todo)
+    setTodoDetails(todo);
   }, [todo]);
 
   const handleTodoUpdate = (updatedTodo: Todo) => {
     const todoDetails = {
       ...updatedTodo,
-      daysRemaining: getDaysRemaining(updatedTodo.expire_date)
-    }
+      daysRemaining: getDaysRemaining(updatedTodo.expire_date),
+    };
     setTodoDetails(todoDetails);
-  }
+  };
 
   const handleCloseDialog = () => {
     onToggle(false);
@@ -28,12 +28,12 @@ const TodoDetails = ({ isOpen, onToggle, todo, categoryTitle }: any) => {
 
   return (
     <>
-      <Dialog  open={isOpen} onOpenChange={handleCloseDialog}>
+      <Dialog open={isOpen} onOpenChange={handleCloseDialog}>
         <DialogContent className="max-w-xl gap-4" onOpenAutoFocus={e => e.preventDefault()}>
-          {todo && (<Header todo={todoDetails} handleTodoUpdate={handleTodoUpdate}/> )}
-          {todo && (<CategorySelect todo={todoDetails} handleTodoUpdate={handleTodoUpdate}/>)}
-          {todo && (<ExpiryDatepicker todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />)}
-          {todo && (<Description todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />)}
+          {todo && <Header todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />}
+          {todo && <CategorySelect todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />}
+          {todo && <ExpiryDatepicker todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />}
+          {todo && <Description todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />}
         </DialogContent>
       </Dialog>
     </>

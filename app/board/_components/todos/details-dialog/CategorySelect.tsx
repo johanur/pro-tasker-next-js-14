@@ -16,7 +16,7 @@ const schema: ZodType<any> = z.object({
   category: z.string(),
 });
 const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
-  const {  categories } = useContext(BoardContext);
+  const { categories } = useContext(BoardContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [categoryTitle, setCategoryTitle] = useState('');
@@ -39,9 +39,9 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
   };
   const enableEditing = () => {
     setIsEditing(true);
-  }
+  };
 
-  const onSubmit = async({ category: categoryId }: z.infer<typeof schema>) => {
+  const onSubmit = async ({ category: categoryId }: z.infer<typeof schema>) => {
     if (categoryId === todo.category_id) {
       return;
     }
@@ -49,7 +49,7 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
     const details: Pick<Todo, 'id' | 'category_id'> = {
       id: todo.id,
       category_id: categoryId,
-    }
+    };
 
     const { error, data } = await updateTodoDetails(details);
 
@@ -69,64 +69,62 @@ const CategorySelect = ({ todo, handleTodoUpdate }: any) => {
       handleTodoUpdate(data);
       disableEditing();
     }
-  }
+  };
 
   return (
-    <div className="flex items-center gap-x-3 w-full h-10 mb-2">
+    <div className="mb-2 flex h-10 w-full items-center gap-x-3">
       <Blocks className="h-5 w-5 text-neutral-700" />
-      <div  className="grid grid-cols-8 gap-6 w-full h-full items-center">
+      <div className="grid h-full w-full grid-cols-8 items-center gap-6">
         <div className="col-span-2">
-          <p className="font-semibold text-neutral-700 tx-md">
-            Category
-          </p>
+          <p className="tx-md font-semibold text-neutral-700">Category</p>
         </div>
         <div className="col-span-6 items-center">
           {isEditing ? (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-                  <div className="flex w-full flex-1 gap-2 items-center">
-                    <div className="flex-grow">
-                      <FormField
-                        control={form.control}
-                        name="category"
-                        render={({ field }) =>  (
-                          <FormItem>
-                            <Select onValueChange={field.onChange} defaultValue={todo.category_id}>
-                              <FormControl>
-                                <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
-                                  <SelectValue />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {categories.map(category => (
-                                  <SelectItem key={category.id} value={category.id}>{category.title}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <Button type="submit" className="bg-transparent hover:bg-transparent p-0">
-                      <Check className="text-black" size={20} />
-                    </Button>
-                    <Button className="bg-transparent hover:bg-transparent p-0" onClick={disableEditing}>
-                      <X className="text-black" size={20} />
-                    </Button>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+                <div className="flex w-full flex-1 items-center gap-2">
+                  <div className="flex-grow">
+                    <FormField
+                      control={form.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Select onValueChange={field.onChange} defaultValue={todo.category_id}>
+                            <FormControl>
+                              <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
+                                <SelectValue />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {categories.map(category => (
+                                <SelectItem key={category.id} value={category.id}>
+                                  {category.title}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormItem>
+                      )}
+                    />
                   </div>
-                </form>
-              </Form>
-
-            ) : (
-            <div role="button" onClick={enableEditing} className="font-normal text-sm hover:bg-gray-100 hover:py-0.5">
+                  <Button type="submit" className="bg-transparent p-0 hover:bg-transparent">
+                    <Check className="text-black" size={20} />
+                  </Button>
+                  <Button className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                    <X className="text-black" size={20} />
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          ) : (
+            <div role="button" onClick={enableEditing} className="text-sm font-normal hover:bg-gray-100 hover:py-0.5">
               {categoryTitle}
             </div>
           )}
-
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CategorySelect
+export default CategorySelect;
