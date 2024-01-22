@@ -2,7 +2,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import Header from './Header';
 import Description from './Description';
 import CategorySelect from './CategorySelect';
-import ExpiryDatepicker from '@/app/board/_components/todos/details-dialog/ExpiryDatepicket';
+import ExpiryDatepicker from '@/app/board/_components/todos/details-dialog/ExpiryDatepicker';
 
 const TodoDetails = ({ isOpen, onToggle, todo, categoryTitle, categories }: any) => {
   const handleCloseDialog = () => {
