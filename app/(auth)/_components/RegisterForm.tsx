@@ -31,7 +31,14 @@ const RegisterForm = () => {
     },
   });
 
+
   const onSubmit = async (data: RegisterFormData) => {
+    toast({
+      duration: 4000,
+      title: 'Registering...',
+      description: 'Verifying your information and creating your account. Please wait...'
+    });
+
     setIsSubmitting(true);
 
     const result = await registerWithEmailAndPassword(data);
@@ -48,7 +55,7 @@ const RegisterForm = () => {
     }
 
     toast({
-      duration: 4000,
+      duration: 3000,
       title: 'Welcome aboard!',
       description: 'You have successfully registered',
     });

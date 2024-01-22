@@ -32,6 +32,12 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    toast({
+      duration: 5000,
+      title: 'Logging in...',
+      description: 'Verifying your credentials. Please wait...'
+    });
+
     setIsSubmitting(true);
 
     const result = await loginWithEmailAndPassword(data);
@@ -48,7 +54,7 @@ const LoginForm = () => {
     }
 
     toast({
-      duration: 4000,
+      duration: 3000,
       title: "You're in!",
       description: 'You have successfully logged in',
     });
