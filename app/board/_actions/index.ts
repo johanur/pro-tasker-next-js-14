@@ -2,7 +2,7 @@
 import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import createSupabaseServerClient from '@/lib/supabase/server';
 import { PostgrestSingleResponse } from '@supabase/supabase-js';
-import { CategoryWithTodos } from '@/app/board/_types';
+import { CategoryWithTodos, Todo } from '@/app/board/_types';
 
 export async function getCategoriesWithTodos(): Promise<PostgrestSingleResponse<CategoryWithTodos[]>> {
   noStore();
@@ -38,4 +38,16 @@ export async function addTodo(todo: {
 export async function updateTodoCategoryId(todoId: string, categoryId: string) {
   const supabase = await createSupabaseServerClient();
   return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
+}
+
+export async function updateTodoDetails(todo: Partial<any>): Promise<PostgrestSingleResponse<Todo>> {
+  const supabase = await createSupabaseServerClient();
+  const result = await supabase
+    .from('todo')
+    .update({ ...todo })
+    .eq('id', todo.id)
+    .select()
+    .single();
+  revalidatePath('/board');
+  return result;
 }

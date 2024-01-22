@@ -78,7 +78,14 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
       </li>
 
       <TodoCreate isOpen={isTodoCreateDialogOpen} onToggle={handleTodoCreateDialogToggle} categoryId={categoryId} />
-      <TodoDetails isOpen={isTodoEditDialogOpen} onToggle={handleTodoEditDialogToggle} todo={selectedTodo} categoryTitle={title} />
+      {selectedTodo && (
+        <TodoDetails
+          isOpen={isTodoEditDialogOpen}
+          onToggle={handleTodoEditDialogToggle}
+          todo={selectedTodo}
+          categoryTitle={title}
+        />
+      )}
     </>
   );
 };

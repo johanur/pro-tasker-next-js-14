@@ -31,7 +31,7 @@ import { BoardContext } from '@/app/board/_contexts';
 
 const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const {  categories } = useContext(BoardContext);
+  const { categories } = useContext(BoardContext);
 
   const oneDayBefore = addDays(new Date(), -1);
 
@@ -47,7 +47,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
     const data = {
       ...values,
       expiryDate: format(values.expiryDate, 'yyyy-MM-dd'),
-      categoryId: values.category
+      categoryId: values.category,
     };
 
     const { error } = await addTodo(data);
@@ -96,7 +96,9 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                       </FormControl>
                       <SelectContent>
                         {categories.map(category => (
-                          <SelectItem key={category.id} value={category.id}>{category.title}</SelectItem>
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.title}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -120,7 +122,7 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: any) => {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem >
+                  <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Add a more details description..." {...field} />
