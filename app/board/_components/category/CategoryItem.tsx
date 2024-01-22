@@ -1,44 +1,38 @@
 'use client';
 
+import React, { useState } from 'react';
+
 import TodoItem from '@/app/board/_components/todos/TodoItem';
 import TodoCreate from '@/app/board/_components/todos/TodoCreate';
-import { useState } from 'react';
-import { getDaysRemaining } from '@/app/board/_utils';
 import TodoDetails from '@/app/board/_components/todos/details-dialog';
-import { Todo } from '@/app/board/_types';
 
-const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
+import { getDaysRemaining } from '@/app/board/_utils';
+import { CategoryItemProps, Todo } from '@/app/board/_types';
+
+const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps) => {
   const [selectedTodo, setSelectedTodo] = useState<Todo>();
   const { title, id: categoryId } = categoryWithTodos;
 
-  const todos = categoryWithTodos.todos.map((todo: any) => {
-    return {
-      ...todo,
-      daysRemaining: getDaysRemaining(todo.expire_date),
-    };
+  const todos = categoryWithTodos.todos.map((todo) => {
+    return { ...todo, daysRemaining: getDaysRemaining(todo.expire_date) };
   });
 
   const [isTodoCreateDialogOpen, setTodoCreateDialogOpen] = useState(false);
   const [isTodoEditDialogOpen, setTodoEditDialogOpen] = useState(false);
-
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
   const handleTodoCreateDialogToggle = (isOpen: boolean) => {
     setTodoCreateDialogOpen(isOpen);
   };
 
   const handleTodoEditDialogToggle = (isOpen: boolean, todo: Todo) => {
-    setTodoEditDialogOpen(isOpen);
     setSelectedTodo(todo);
+    setTodoEditDialogOpen(isOpen);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const todoId = e.dataTransfer.getData('text');
     handleUpdateList(todoId, categoryId);
-    handleDragging(false);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
@@ -49,8 +43,11 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
 
       <li className="h-full w-[272px] shrink-0 select-none">
         <div className="w-full rounded-xl bg-[#f1f2f4] pb-2 shadow-md">
+
           <div className="items-start- flex justify-between gap-x-2 px-2 pt-2 text-sm font-semibold">
-            <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">{title}</div>
+            <div className="h-7 w-full border-transparent px-2.5 py-1 text-sm font-medium">
+              {title}
+            </div>
           </div>
 
           <div onDrop={handleDrop} onDragOver={handleDragOver}>
@@ -60,7 +57,6 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
                   todo={todo}
                   key={todo.id}
                   daysRemaining={todo.daysRemaining}
-                  handleDragging={handleDragging}
                   handleTodoEditDialogToggle={handleTodoEditDialogToggle}
                 />
               ))}
@@ -77,7 +73,10 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
         </div>
       </li>
 
+      {/* Todo Create Dialog */}
       <TodoCreate isOpen={isTodoCreateDialogOpen} onToggle={handleTodoCreateDialogToggle} categoryId={categoryId} />
+
+      {/* Todo Edit Dialog */}
       {selectedTodo && (
         <TodoDetails
           isOpen={isTodoEditDialogOpen}

@@ -46,3 +46,8 @@ export interface DescriptionRef {
 export interface CategoryContainerProps {
   data: CategoryWithTodos[];
 }
+
+export interface CategoryItemProps {
+  categoryWithTodos: CategoryWithTodos;
+  handleUpdateList: (todoId: string, categoryId: string) => void;
+}
