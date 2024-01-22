@@ -27,8 +27,12 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps
 
   const handleTodoEditDialogToggle = (isOpen: boolean, todo: ExtendedTodo) => {
     setSelectedTodo(todo);
-    setTodoEditDialogOpen(isOpen);
+    closeTodoEditDialog(isOpen);
   };
+
+  const closeTodoEditDialog = (isOpen: boolean) => {
+    setTodoEditDialogOpen(isOpen);
+  }
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -79,9 +83,8 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps
       {selectedTodo && (
         <TodoDetails
           isOpen={isTodoEditDialogOpen}
-          onToggle={handleTodoEditDialogToggle}
+          onToggle={closeTodoEditDialog}
           todo={selectedTodo}
-          categoryTitle={title}
         />
       )}
     </>
