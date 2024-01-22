@@ -6,6 +6,9 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
 import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
+import { updateTodoDetails, updateTodoExpiryDate, updateTodoTitle } from '@/app/board/_actions';
+import { toast } from '@/components/ui/use-toast';
+import { Todo } from '@/app/board/_types';
 
 const schema: ZodType<any> = z.object({
   title: z
@@ -28,8 +31,32 @@ const Header = ({ todo }: any) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof schema>) => {
-    console.log('Log Here values: ', values);
+  const onSubmit = async ({ title }: z.infer<typeof schema>) => {
+    if (title === todo.title) {
+      return;
+    }
+
+    const data: Pick<Todo, 'title' | 'id'> = {
+      title: title,
+      id: todo.id,
+    }
+
+    const { error } = await updateTodoDetails(data);
+
+    if (error) {
+      toast({
+        duration: 4000,
+        variant: 'destructive',
+        title: 'Failed to update title',
+        description: 'There was an error while updating the title. Please try again later',
+      });
+    } else {
+      toast({
+        duration: 4000,
+        title: 'Title updated successfully',
+        description: 'The new title has been updated successfully!',
+      });
+    }
   };
 
 
