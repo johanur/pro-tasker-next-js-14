@@ -6,7 +6,7 @@ export const CategorySchema: ZodType<CategoryFormData> = z.object({
 });
 
 export const TodoSchema: ZodType<TodoFormData> = z.object({
-  title: z.string().min(3, {
+  title: z.string().min(1, {
     message: 'Title is required',
   }),
   category: z.string(),
@@ -17,4 +17,29 @@ export const TodoSchema: ZodType<TodoFormData> = z.object({
     required_error: 'Expiry date is required',
     invalid_type_error: 'Expiry date is required',
   }),
+});
+
+// For Todo Edit
+export const TodoTitleSchema: ZodType<{ title: string }> = z.object({
+  title: z
+    .string({
+      required_error: 'Title is required',
+      invalid_type_error: 'Title is required',
+    })
+    .min(3, {
+      message: 'Title is too short.',
+    }),
+});
+
+export const ExpiryDateSchema: ZodType<{ expiryDate: Date }> = z.object({
+  expiryDate: z.date(),
+});
+
+export const CategorySelectSchema: ZodType<{ category: string }> = z.object({
+  category: z.string(),
+});
+
+
+export const DescriptionSchema: ZodType<{ description: string }> = z.object({
+  description: z.string().min(1, {message: 'Description is required'}),
 });

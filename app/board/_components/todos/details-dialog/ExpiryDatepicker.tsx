@@ -5,30 +5,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Calendar as CalendarIcon, CalendarClock, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { ZodType } from 'zod';
 import { addDays, format, isBefore } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
-import { Todo } from '@/app/board/_types';
+import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
+import { ExpiryDateSchema } from '@/app/board/_schema';
 
-const schema: ZodType<any> = z.object({
-  expiryDate: z.date({
-    required_error: 'Expiry date is required',
-    invalid_type_error: 'Expiry date is required',
-  }),
-});
-const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
+
+const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const oneDayBefore = addDays(new Date(), -1);
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof ExpiryDateSchema>>({
+    resolver: zodResolver(ExpiryDateSchema),
     defaultValues: {
-      expiryDate: todo.expire_date,
+      expiryDate: new Date(todo.expire_date),
     },
   });
 
@@ -41,12 +37,14 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
     setIsEditing(false);
   };
 
-  const onSubmit = async ({ expiryDate }: z.infer<typeof schema>) => {
+  const onSubmit = async ({ expiryDate }: z.infer<typeof ExpiryDateSchema>) => {
     const date = format(expiryDate, 'yyyy-MM-dd');
 
     if (date === todo.expire_date) {
       return;
     }
+
+    setIsSubmitting(true);
 
     const details: Pick<Todo, 'id' | 'expire_date'> = {
       id: todo.id,
@@ -57,20 +55,20 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
 
     if (error) {
       toast({
-        duration: 4000,
         variant: 'destructive',
         title: 'Failed to update expire date',
         description: 'There was an error while updating the expire date. Please try again later',
       });
     } else {
       toast({
-        duration: 4000,
         title: 'Expire date updated successfully',
         description: 'The new expire date has been updated successfully!',
       });
       handleTodoUpdate(data);
       disableEditing();
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -95,6 +93,7 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
+                                  disabled={isSubmitting}
                                   variant={'outline'}
                                   className={cn(
                                     'flex w-full justify-start pl-3 font-normal',
@@ -126,10 +125,10 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: any) => {
                       )}
                     />
                   </div>
-                  <Button className="bg-transparent p-0 hover:bg-transparent">
+                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent">
                     <Check className="flex-grow-0 text-black" size={20} />
                   </Button>
-                  <Button className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
                     <X className="flex-grow-0 text-black" size={20} />
                   </Button>
                 </div>

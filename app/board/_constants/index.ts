@@ -13,3 +13,6 @@ export const DayRemainingAndStatusMap = {
   [DayRemaining.Today]: 'Expires Today',
   [DayRemaining.Expired]: 'Expired',
 };
+
+export const DRAFT_DESCRIPTION_STORAGE_KEY = 'draft_description';
+

@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation';
 import createSupabaseServerClient from '@/lib/supabase/server';
+import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 
 const Logout = () => {
   const logout = async () => {
@@ -10,7 +12,10 @@ const Logout = () => {
   };
   return (
     <form action={logout}>
-      <button className="font-medium text-blue-500">Logout</button>
+      <Button variant="link" className="text-md p-0 font-medium text-blue-500 hover:no-underline">
+        <LogOut className="mr-2" size={20} />
+        Logout
+      </Button>
     </form>
   );
 };

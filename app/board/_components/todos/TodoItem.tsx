@@ -1,23 +1,24 @@
 'use client';
-import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
 
-const TodoItem = ({ todo, handleDragging, daysRemaining, handleTodoEditDialogToggle }: any) => {
+import React from 'react';
+import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
+import { TodoItemProps } from '@/app/board/_types';
+
+const TodoItem = ({ todo, handleTodoEditDialogToggle }: TodoItemProps) => {
+  const { id, title, daysRemaining } = todo;
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.setData('text', `${todo.id}`);
-    handleDragging(true);
+    e.dataTransfer.setData('text', `${id}`);
   };
 
-  const handleDragEnd = () => handleDragging(false);
   return (
     <>
       <div
         role="button"
         draggable
         onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
         onClick={() => handleTodoEditDialogToggle(true, todo)}
-        className="flex flex-col items-start truncate rounded-md border-2 border-transparent bg-white px-3 py-2 text-sm shadow-sm hover:border-black">
-        {todo.title}
+        className="flex flex-col items-start truncate rounded-lg border-2 border-transparent bg-white px-3 py-2 text-sm shadow-md hover:border-black">
+        {title}
         {daysRemaining <= 2 && <ExpiryDateBadge daysRemaining={daysRemaining} />}
       </div>
     </>

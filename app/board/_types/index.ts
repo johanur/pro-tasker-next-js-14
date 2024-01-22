@@ -1,4 +1,9 @@
 import { DayRemaining } from '@/app/board/_enums';
+import { z } from 'zod';
+import { CategorySchema, TodoSchema } from '@/app/board/_schema';
+
+export type AddCategorySchema = z.infer<typeof CategorySchema>;
+export type AddTodoSchema = z.infer<typeof TodoSchema>;
 
 export interface CategoryFormData {
   title: string;
@@ -13,11 +18,6 @@ export interface TodoFormData {
 
 export interface ExpiryDateBadgeProps {
   daysRemaining: DayRemaining;
-}
-
-export interface BadgeInfo {
-  colorClass: string;
-  expireStatus: string;
 }
 
 export interface Category {
@@ -38,9 +38,43 @@ export interface Todo {
   expire_date: string;
 }
 
+export interface ExtendedTodo extends Todo {
+  daysRemaining: number;
+}
+
 export type CategoryWithTodos = Category & { todos: Todo[] };
-export type UpdateTodoCategoryFunction = (todoId: string, targetCategoryId: string) => void;
 
 export interface DescriptionRef {
   draftDescription(): void;
+}
+
+export interface CategoryContainerProps {
+  data: CategoryWithTodos[];
+}
+
+export interface CategoryItemProps {
+  categoryWithTodos: CategoryWithTodos;
+  handleUpdateList: (todoId: string, categoryId: string) => void;
+}
+
+export interface TodoItemProps {
+  todo: ExtendedTodo;
+  handleTodoEditDialogToggle: (isOpen: boolean, todo: ExtendedTodo) => void;
+}
+
+export interface TodoCreateProps {
+  isOpen: boolean;
+  categoryId: string;
+  onToggle: (isOpen: boolean) => void;
+}
+
+export interface TodoDetailsProps {
+  isOpen: boolean;
+  onToggle: (isOpen: boolean) => void;
+  todo: ExtendedTodo;
+}
+
+export interface TodoDetailsComponentsProps {
+  todo: ExtendedTodo;
+  handleTodoUpdate: (todo: Todo) => void;
 }

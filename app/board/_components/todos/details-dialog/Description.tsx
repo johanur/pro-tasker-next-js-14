@@ -1,33 +1,31 @@
-import { AlignLeft } from 'lucide-react';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+
+import * as z from 'zod';
+import { AlignLeft } from 'lucide-react';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ZodType } from 'zod';
-import { DescriptionRef, Todo } from '@/app/board/_types';
+import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
 import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
-import { DRAFT_DESCRIPTION_STORAGE_KEY } from '@/app/board/_contexts';
+import { DRAFT_DESCRIPTION_STORAGE_KEY } from '@/app/board/_constants';
+import { DescriptionSchema } from '@/app/board/_schema';
 
-const schema: ZodType<any> = z.object({
-  description: z.string({
-    required_error: 'Description is required',
-    invalid_type_error: 'Description is required',
-  }),
-});
-const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
+
+
+const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponentsProps, ref) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasDraftDescription, setHasDraftDescription] = useState(false);
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof DescriptionSchema>>({
+    resolver: zodResolver(DescriptionSchema),
     mode: 'onBlur',
     defaultValues: {
-      description: todo.description
+      description: todo.description,
     },
   });
 
@@ -47,7 +45,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
         return;
       }
       localStorage.setItem(DRAFT_DESCRIPTION_STORAGE_KEY, description);
-    }
+    },
   }));
 
   const disableEditing = () => {
@@ -65,13 +63,14 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
       disableEditing();
       setHasDraftDescription(false);
     }
-  }
+  };
 
-  const onSubmit = async ({ description }: z.infer<typeof schema>) => {
+  const onSubmit = async ({ description }: z.infer<typeof DescriptionSchema>) => {
     if (description === todo.description) {
       return;
     }
 
+    setIsSubmitting(true);
     const { id } = todo;
     const details: Pick<Todo, 'id' | 'description'> = { id, description };
 
@@ -95,6 +94,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
       setHasDraftDescription(false);
       disableEditing();
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -103,7 +103,12 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
       <div className="w-full">
         <div className="mb-2 flex items-center justify-between">
           <p className="font-semibold text-neutral-700">Description</p>
-          {hasDraftDescription && (<Badge variant="secondary" className="rounded-sm"> Unsaved Changes</Badge>)}
+          {hasDraftDescription && (
+            <Badge variant="secondary" className="rounded-sm">
+              {' '}
+              Unsaved Changes
+            </Badge>
+          )}
         </div>
         {isEditing ? (
           <Form {...form}>
@@ -114,28 +119,37 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea placeholder="Add a more details description..." {...field} />
+                      <Textarea disabled={isSubmitting} placeholder="Add a more details description..." {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
               <Button
-                disabled={false}
+                disabled={isSubmitting}
                 type="submit"
                 className="w-1/10 h-8 rounded-md bg-indigo-600 disabled:cursor-not-allowed">
                 Submit
               </Button>
-              {
-                hasDraftDescription ? (
-                  <Button type="button" variant="secondary" className="w-1/10 mx-4 h-8 rounded-md" onClick={discardDescriptionChanges}>
-                    Discard Changes
-                  </Button>
-                ) : (
-                  <Button type="button" variant="secondary" className="w-1/10 mx-4 h-8 rounded-md" onClick={disableEditing}>
-                    Close
-                  </Button>
-                )
-              }
+              {hasDraftDescription ? (
+                <Button
+                  disabled={isSubmitting}
+                  type="button"
+                  variant="secondary"
+                  className="w-1/10 mx-4 h-8 rounded-md"
+                  onClick={discardDescriptionChanges}>
+                  Discard Changes
+                </Button>
+              ) : (
+                <Button
+                  disabled={isSubmitting}
+                  type="button"
+                  variant="secondary"
+                  className="w-1/10 mx-4 h-8 rounded-md"
+                  onClick={disableEditing}>
+                  Close
+                </Button>
+              )}
             </form>
           </Form>
         ) : (
