@@ -96,7 +96,7 @@ const LoginForm = () => {
               )}
             />
             <Button disabled={isSubmitting} type="submit" className="w-full my-5 bg-indigo-600 hover:bg-indigo-500">
-              Submit
+              Login
             </Button>
           </form>
         </Form>

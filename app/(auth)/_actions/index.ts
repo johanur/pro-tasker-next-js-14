@@ -10,14 +10,12 @@ export async function loginWithEmailAndPassword(data: LoginFormData): Promise<Au
   return supabase.auth.signInWithPassword(data);
 }
 
-export async function registerWithEmailAndPassword(data: RegisterFormData) {
+export async function registerWithEmailAndPassword(data: RegisterFormData): Promise<AuthResponse> {
   const supabase: SupabaseClient = await createSupabaseServerClient();
 
   const payload = {
     email: data.email,
     password: data.password,
   };
-  const result: AuthResponse = await supabase.auth.signUp(payload);
-
-  return JSON.stringify(result);
+  return supabase.auth.signUp(payload);
 }

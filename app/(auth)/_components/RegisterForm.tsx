@@ -1,31 +1,57 @@
 'use client';
 
-import { z } from 'zod';
+import { useState } from 'react';
+
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import styles from '../_styles/auth.module.scss';
-import { RegisterFormData } from '../_types';
+
+import { toast } from '@/components/ui/use-toast';
+
+import { RegisterFormData, RegistrationInputs } from '../_types';
 import { RegisterSchema } from '../_schema';
 import { registerWithEmailAndPassword } from '../_actions';
 
-type Inputs = z.infer<typeof RegisterSchema>;
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const RegisterForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<RegistrationInputs>({
     resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
   });
 
-  const submitData = async (data: RegisterFormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
+    setIsSubmitting(true);
+
     const result = await registerWithEmailAndPassword(data);
 
-    // TODO: While Submitting - Disable Input fields and submit button. If possible add spinner to submit button
-    // TODO: Handle Error & Success - Show Toastr
+    if (result.error) {
+      toast({
+        duration: 4000,
+        variant: 'destructive',
+        title: 'Registration failed',
+        description: result.error.message,
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    toast({
+      duration: 4000,
+      title: 'Welcome aboard!',
+      description: 'You have successfully registered',
+    });
   };
 
   return (
@@ -40,50 +66,50 @@ const RegisterForm = () => {
       </div>
 
       <div className={styles['form']}>
-        <form className="space-y-6" onSubmit={handleSubmit(submitData)}>
-          <div className="form-field">
-            <label htmlFor="email" className={styles['form-label']}>
-              Email address
-            </label>
-            <div className="mt-2">
-              <input id="email" className={styles['form-input']} {...register('email')} />
-            </div>
-            {errors?.email?.message && <p className="pt-1.5 text-sm text-red-400">{errors.email.message}</p>}
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="password" className={styles['form-label']}>
-              Password
-            </label>
-            <div className="mt-2">
-              <input id="password" type="password" className={styles['form-input']} {...register('password')} />
-            </div>
-            {errors?.password?.message && <p className="pt-1.5 text-sm text-red-400">{errors.password.message}</p>}
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="confirm-password" className={styles['form-label']}>
-              Confirm Password
-            </label>
-            <div className="mt-2">
-              <input
-                id="confirm-password"
-                type="password"
-                className={styles['form-input']}
-                {...register('confirmPassword')}
-              />
-            </div>
-            {errors?.confirmPassword?.message && (
-              <p className="pt-1.5 text-sm text-red-400">{errors.confirmPassword.message}</p>
-            )}
-          </div>
-
-          <div className="form-actions">
-            <button type="submit" className={styles['form-submit-button']}>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email address</FormLabel>
+                  <FormControl>
+                    <Input disabled={isSubmitting} className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input disabled={isSubmitting} type="password" className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input disabled={isSubmitting} type="password" className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button disabled={isSubmitting} type="submit" className="w-full my-5 bg-indigo-600 hover:bg-indigo-500">
               Register
-            </button>
-          </div>
-        </form>
+            </Button>
+          </form>
+        </Form>
 
         <div className={styles.footer}>
           <span className={styles['footer-text']}>Already a member? </span>

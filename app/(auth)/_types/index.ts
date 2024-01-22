@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LoginSchema } from '@/app/(auth)/_schema';
+import { LoginSchema, RegisterSchema } from '@/app/(auth)/_schema';
 
 interface AuthFormData {
   email: string;
@@ -12,3 +12,4 @@ export interface RegisterFormData extends AuthFormData {
 }
 
 export type LoginInputs = z.infer<typeof LoginSchema>;
+export type RegistrationInputs = z.infer<typeof RegisterSchema>;
