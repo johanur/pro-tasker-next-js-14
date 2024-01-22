@@ -12,7 +12,7 @@ const Logout = () => {
   };
   return (
     <form action={logout}>
-      <Button variant="link" className="font-medium text-blue-500 text-md p-0 hover:no-underline">
+      <Button variant="link" className="text-md p-0 font-medium text-blue-500 hover:no-underline">
         <LogOut className="mr-2" size={20} />
         Logout
       </Button>

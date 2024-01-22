@@ -27,7 +27,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
     resolver: zodResolver(schema),
     mode: 'onBlur',
     defaultValues: {
-      description: todo.description
+      description: todo.description,
     },
   });
 
@@ -47,7 +47,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
         return;
       }
       localStorage.setItem(DRAFT_DESCRIPTION_STORAGE_KEY, description);
-    }
+    },
   }));
 
   const disableEditing = () => {
@@ -65,7 +65,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
       disableEditing();
       setHasDraftDescription(false);
     }
-  }
+  };
 
   const onSubmit = async ({ description }: z.infer<typeof schema>) => {
     if (description === todo.description) {
@@ -103,7 +103,12 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
       <div className="w-full">
         <div className="mb-2 flex items-center justify-between">
           <p className="font-semibold text-neutral-700">Description</p>
-          {hasDraftDescription && (<Badge variant="secondary" className="rounded-sm"> Unsaved Changes</Badge>)}
+          {hasDraftDescription && (
+            <Badge variant="secondary" className="rounded-sm">
+              {' '}
+              Unsaved Changes
+            </Badge>
+          )}
         </div>
         {isEditing ? (
           <Form {...form}>
@@ -125,17 +130,23 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: any, ref) => {
                 className="w-1/10 h-8 rounded-md bg-indigo-600 disabled:cursor-not-allowed">
                 Submit
               </Button>
-              {
-                hasDraftDescription ? (
-                  <Button type="button" variant="secondary" className="w-1/10 mx-4 h-8 rounded-md" onClick={discardDescriptionChanges}>
-                    Discard Changes
-                  </Button>
-                ) : (
-                  <Button type="button" variant="secondary" className="w-1/10 mx-4 h-8 rounded-md" onClick={disableEditing}>
-                    Close
-                  </Button>
-                )
-              }
+              {hasDraftDescription ? (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="w-1/10 mx-4 h-8 rounded-md"
+                  onClick={discardDescriptionChanges}>
+                  Discard Changes
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="w-1/10 mx-4 h-8 rounded-md"
+                  onClick={disableEditing}>
+                  Close
+                </Button>
+              )}
             </form>
           </Form>
         ) : (

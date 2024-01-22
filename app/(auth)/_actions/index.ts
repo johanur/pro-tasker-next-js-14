@@ -22,4 +22,3 @@ export async function registerWithEmailAndPassword(data: RegisterFormData) {
 
   return JSON.stringify(result);
 }
-
