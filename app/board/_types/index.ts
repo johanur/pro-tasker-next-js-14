@@ -37,6 +37,10 @@ export interface Todo {
   expire_date: string;
 }
 
+export interface ExtendedTodo extends Todo {
+  daysRemaining: number;
+}
+
 export type CategoryWithTodos = Category & { todos: Todo[] };
 
 export interface DescriptionRef {
@@ -51,3 +55,9 @@ export interface CategoryItemProps {
   categoryWithTodos: CategoryWithTodos;
   handleUpdateList: (todoId: string, categoryId: string) => void;
 }
+
+export interface TodoItemProps {
+  todo: ExtendedTodo;
+  handleTodoEditDialogToggle: (isOpen: boolean, todo: ExtendedTodo) => void;
+}
+

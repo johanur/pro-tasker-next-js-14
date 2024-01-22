@@ -7,13 +7,13 @@ import TodoCreate from '@/app/board/_components/todos/TodoCreate';
 import TodoDetails from '@/app/board/_components/todos/details-dialog';
 
 import { getDaysRemaining } from '@/app/board/_utils';
-import { CategoryItemProps, Todo } from '@/app/board/_types';
+import { CategoryItemProps, ExtendedTodo, Todo } from '@/app/board/_types';
 
 const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps) => {
-  const [selectedTodo, setSelectedTodo] = useState<Todo>();
+  const [selectedTodo, setSelectedTodo] = useState<ExtendedTodo>();
   const { title, id: categoryId } = categoryWithTodos;
 
-  const todos = categoryWithTodos.todos.map((todo) => {
+  const todos: ExtendedTodo[] = categoryWithTodos.todos.map((todo) => {
     return { ...todo, daysRemaining: getDaysRemaining(todo.expire_date) };
   });
 
@@ -24,7 +24,7 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps
     setTodoCreateDialogOpen(isOpen);
   };
 
-  const handleTodoEditDialogToggle = (isOpen: boolean, todo: Todo) => {
+  const handleTodoEditDialogToggle = (isOpen: boolean, todo: ExtendedTodo) => {
     setSelectedTodo(todo);
     setTodoEditDialogOpen(isOpen);
   };
@@ -52,11 +52,10 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: CategoryItemProps
 
           <div onDrop={handleDrop} onDragOver={handleDragOver}>
             <ol className="mx-1 mt-2 flex flex-col gap-y-2 px-1 py-0.5">
-              {todos.map((todo: any) => (
+              {todos.map((todo) => (
                 <TodoItem
-                  todo={todo}
                   key={todo.id}
-                  daysRemaining={todo.daysRemaining}
+                  todo={todo}
                   handleTodoEditDialogToggle={handleTodoEditDialogToggle}
                 />
               ))}
