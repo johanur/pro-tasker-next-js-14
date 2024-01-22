@@ -40,7 +40,7 @@ const ExpiryDatepicker = ({ todo }: any) => {
     setIsEditing(false);
   };
 
-  const onSubmit = async ({ expiryDate }: { expiryDate: Date}) => {
+  const onSubmit = async ({ expiryDate }: z.infer<typeof schema>) => {
     const date = format(expiryDate, 'yyyy-MM-dd');
 
     const { error } = await updateTodoExpiryDate(date, todo.id);
