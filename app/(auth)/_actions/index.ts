@@ -1,14 +1,13 @@
 'use server';
 
-import { LoginFormData, RegisterFormData } from '@/app/(auth)/_types';
-import { SupabaseClient } from '@supabase/supabase-js';
 import createSupabaseServerClient from '@/lib/supabase/server';
-import { AuthResponse } from '@supabase/gotrue-js';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { AuthResponse, AuthTokenResponsePassword } from '@supabase/gotrue-js';
+import { LoginFormData, RegisterFormData } from '@/app/(auth)/_types';
 
-export async function loginWithEmailAndPassword(data: LoginFormData) {
+export async function loginWithEmailAndPassword(data: LoginFormData): Promise<AuthTokenResponsePassword> {
   const supabase: SupabaseClient = await createSupabaseServerClient();
-  const result: AuthResponse = await supabase.auth.signInWithPassword(data);
-  return JSON.stringify(result);
+  return supabase.auth.signInWithPassword(data);
 }
 
 export async function registerWithEmailAndPassword(data: RegisterFormData) {

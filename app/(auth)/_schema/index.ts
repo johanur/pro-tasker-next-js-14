@@ -5,8 +5,9 @@ export const LoginSchema: ZodType<LoginFormData> = z.object({
   email: z
     .string()
     .min(1, { message: 'Email is required' })
-    .email('Invalid email address. Please enter a valid email address'),
-  password: z.string().min(1, { message: 'Password is required' }),
+    .email('Invalid email address. Please enter a valid email format (e.g., example@example.com)'),
+  password: z.string()
+    .min(1, { message: 'Password is required'})
 });
 
 export const RegisterSchema: ZodType<RegisterFormData> = z

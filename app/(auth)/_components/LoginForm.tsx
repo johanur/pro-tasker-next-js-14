@@ -1,32 +1,60 @@
 'use client';
 
-import { z } from 'zod';
+import { useState } from 'react';
+
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import styles from '../_styles/auth.module.scss';
-import { LoginFormData } from '../_types';
+import { toast } from '@/components/ui/use-toast';
+
+import { LoginFormData, LoginInputs } from '../_types';
 import { LoginSchema } from '../_schema';
 import { loginWithEmailAndPassword } from '../_actions';
+import { AuthTokenResponsePassword } from '@supabase/gotrue-js';
 
-type Inputs = z.infer<typeof LoginSchema>;
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+import styles from '../_styles/auth.module.scss';
+
 
 const LoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<LoginInputs>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: ''
+    }
   });
 
-  const submitData = async (data: LoginFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
+    setIsSubmitting(true);
+
     const result = await loginWithEmailAndPassword(data);
 
-    // TODO: While Submitting - Disable Input fields and submit button. If possible add spinner to submit button
-    // TODO: Handle Error & Success - Show Toastr
+    if (result.error) {
+      toast({
+        duration: 4000,
+        variant: 'destructive',
+        title: result.error.message,
+        description: 'Please ensure your email and password are correct',
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    toast({
+      duration: 4000,
+      title: 'You\'re in!',
+      description: 'You have successfully logged in',
+    });
   };
+
   return (
     <div className={styles['authentication-container']}>
       <div className={styles.header}>
@@ -38,34 +66,40 @@ const LoginForm = () => {
         <h2 className={styles['header-title']}>Login to your account</h2>
       </div>
 
-      <div className={styles['form']} onSubmit={handleSubmit(submitData)}>
-        <form className="space-y-6">
-          <div className="form-field">
-            <label htmlFor="email" className={styles['form-label']}>
-              Email address
-            </label>
-            <div className="mt-2">
-              <input id="email" type="text" className={styles['form-input']} {...register('email')} />
-            </div>
-            {errors?.email?.message && <p className="pt-1.5 text-sm text-red-400">{errors.email.message}</p>}
-          </div>
+      <div className={styles['form']}>
 
-          <div className="form-field">
-            <label htmlFor="password" className={styles['form-label']}>
-              Password
-            </label>
-            <div className="mt-2">
-              <input id="password" type="password" className={styles['form-input']} {...register('password')} />
-            </div>
-            {errors?.password?.message && <p className="pt-1.5 text-sm text-red-400">{errors.password.message}</p>}
-          </div>
-
-          <div className="form-actions">
-            <button type="submit" className={styles['form-submit-button']}>
-              Login
-            </button>
-          </div>
-        </form>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email address</FormLabel>
+                  <FormControl>
+                    <Input disabled={isSubmitting} className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input disabled={isSubmitting} type="password" className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button disabled={isSubmitting} type="submit" className="w-full my-5 bg-indigo-600 hover:bg-indigo-500">
+              Submit
+            </Button>
+          </form>
+        </Form>
       </div>
 
       <div className={styles.footer}>
