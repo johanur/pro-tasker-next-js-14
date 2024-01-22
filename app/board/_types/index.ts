@@ -15,11 +15,6 @@ export interface ExpiryDateBadgeProps {
   daysRemaining: DayRemaining;
 }
 
-export interface BadgeInfo {
-  colorClass: string;
-  expireStatus: string;
-}
-
 export interface Category {
   id: string;
   title: string;
@@ -39,8 +34,11 @@ export interface Todo {
 }
 
 export type CategoryWithTodos = Category & { todos: Todo[] };
-export type UpdateTodoCategoryFunction = (todoId: string, targetCategoryId: string) => void;
 
 export interface DescriptionRef {
   draftDescription(): void;
+}
+
+export interface CategoryContainerProps {
+  data: CategoryWithTodos[];
 }
