@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import styles from '../_styles/auth.module.scss';
 import { RegisterFormData } from '../_types/form';
 import { RegisterSchema } from '../_schema/register.schema';
-import { registerWithEmailAndPassword } from '../_actions/register.action';
+import { registerWithEmailAndPassword } from '../_actions';
 
 type Inputs = z.infer<typeof RegisterSchema>;
 
