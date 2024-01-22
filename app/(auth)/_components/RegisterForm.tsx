@@ -27,8 +27,8 @@ const RegisterForm = () => {
     defaultValues: {
       email: '',
       password: '',
-      confirmPassword: ''
-    }
+      confirmPassword: '',
+    },
   });
 
   const onSubmit = async (data: RegisterFormData) => {
@@ -75,7 +75,12 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                    <Input
+                      disabled={isSubmitting}
+                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
+                      {...field}
+                      data-1p-ignore
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +92,13 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} type="password" className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                    <Input
+                      disabled={isSubmitting}
+                      type="password"
+                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
+                      {...field}
+                      data-1p-ignore
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -99,13 +110,19 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} type="password" className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                    <Input
+                      disabled={isSubmitting}
+                      type="password"
+                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
+                      {...field}
+                      data-1p-ignore
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={isSubmitting} type="submit" className="w-full my-5 bg-indigo-600 hover:bg-indigo-500">
+            <Button disabled={isSubmitting} type="submit" className="my-5 w-full bg-indigo-600 hover:bg-indigo-500">
               Register
             </Button>
           </form>

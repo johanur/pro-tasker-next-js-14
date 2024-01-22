@@ -6,8 +6,7 @@ export const LoginSchema: ZodType<LoginFormData> = z.object({
     .string()
     .min(1, { message: 'Email is required' })
     .email('Invalid email address. Please enter a valid email format (e.g., example@example.com)'),
-  password: z.string()
-    .min(1, { message: 'Password is required'})
+  password: z.string().min(1, { message: 'Password is required' }),
 });
 
 export const RegisterSchema: ZodType<RegisterFormData> = z
@@ -16,9 +15,10 @@ export const RegisterSchema: ZodType<RegisterFormData> = z
       .string()
       .min(1, { message: 'Email is required' })
       .email('Invalid email address. Please enter a valid email format (e.g., example@example.com)'),
-    password: z.string()
+    password: z
+      .string()
       .min(6, { message: 'Password must be at least 6 characters.' })
-      .max(32, { message: 'Password can be max 32 characters.'}),
+      .max(32, { message: 'Password can be max 32 characters.' }),
     confirmPassword: z.string(),
   })
   .refine(data => data.password === data.confirmPassword, {

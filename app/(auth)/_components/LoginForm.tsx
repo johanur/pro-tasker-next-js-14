@@ -20,7 +20,6 @@ import { Button } from '@/components/ui/button';
 
 import styles from '../_styles/auth.module.scss';
 
-
 const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,8 +27,8 @@ const LoginForm = () => {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
-      password: ''
-    }
+      password: '',
+    },
   });
 
   const onSubmit = async (data: LoginFormData) => {
@@ -50,7 +49,7 @@ const LoginForm = () => {
 
     toast({
       duration: 4000,
-      title: 'You\'re in!',
+      title: "You're in!",
       description: 'You have successfully logged in',
     });
   };
@@ -67,7 +66,6 @@ const LoginForm = () => {
       </div>
 
       <div className={styles['form']}>
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
@@ -77,7 +75,12 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                    <Input
+                      disabled={isSubmitting}
+                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
+                      {...field}
+                      data-1p-ignore
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,13 +92,19 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} type="password" className="focus-visible:ring-2 focus-visible:ring-offset-0" {...field} data-1p-ignore />
+                    <Input
+                      disabled={isSubmitting}
+                      type="password"
+                      className="focus-visible:ring-2 focus-visible:ring-offset-0"
+                      {...field}
+                      data-1p-ignore
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={isSubmitting} type="submit" className="w-full my-5 bg-indigo-600 hover:bg-indigo-500">
+            <Button disabled={isSubmitting} type="submit" className="my-5 w-full bg-indigo-600 hover:bg-indigo-500">
               Login
             </Button>
           </form>
