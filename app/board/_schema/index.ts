@@ -30,3 +30,7 @@ export const TodoTitleSchema: ZodType<{ title: string }> = z.object({
       message: 'Title is too short.',
     }),
 });
+
+export const ExpiryDateSchema: ZodType<{ expiryDate: Date }> = z.object({
+  expiryDate: z.date(),
+});
