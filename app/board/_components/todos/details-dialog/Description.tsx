@@ -7,6 +7,9 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
+import { Todo } from '@/app/board/_types';
+import { updateTodoDetails } from '@/app/board/_actions';
+import { toast } from '@/components/ui/use-toast';
 
 const schema: ZodType<any> = z.object({
   description: z.string({
@@ -32,7 +35,34 @@ const Description = ({ todo }: any) => {
     setIsEditing(true);
   }
 
-  const onSubmit = () => {
+  const onSubmit = async({ description }: z.infer<typeof schema>) => {
+    if (description === todo.description) {
+      return;
+    }
+
+    const { id } = todo;
+    const details: Pick<Todo, 'id' | 'description'> = { id, description }
+
+    const { error } = await updateTodoDetails(details);
+
+    if (error) {
+      toast({
+        duration: 4000,
+        variant: 'destructive',
+        title: 'Failed to update description',
+        description: 'There was an error while updating the description. Please try again later',
+      });
+    } else {
+      toast({
+        duration: 4000,
+        title: 'Description updated successfully',
+        description: 'The new description has been updated successfully!',
+      });
+      disableEditing();
+    }
+
+    console.log('Log Here Not Same');
+
   }
 
   return (
@@ -58,7 +88,7 @@ const Description = ({ todo }: any) => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="h-8 w-1/10 rounded-md bg-indigo-600">
+              <Button disabled={false} type="submit" className="h-8 w-1/10 rounded-md bg-indigo-600 disabled:cursor-not-allowed">
                 Submit
               </Button>
               <Button
