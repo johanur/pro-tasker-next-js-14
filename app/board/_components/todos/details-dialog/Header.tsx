@@ -1,40 +1,35 @@
+import { useState } from 'react';
+
 import { Layout } from 'lucide-react';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ZodType } from 'zod';
 import ExpiryDateBadge from '@/app/board/_components/ExpiryDateBadge';
 import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
-import { Todo } from '@/app/board/_types';
+import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
+import { TodoTitleSchema } from '@/app/board/_schema';
 
-const schema: ZodType<any> = z.object({
-  title: z
-    .string({
-      required_error: 'Title is required',
-      invalid_type_error: 'Title is required',
-    })
-    .min(3, {
-      message: 'Title is too short.',
-    }),
-});
 
-const Header = ({ todo, handleTodoUpdate }: any) => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+const Header = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<z.infer<typeof TodoTitleSchema>>({
+    resolver: zodResolver(TodoTitleSchema),
     mode: 'onBlur',
     defaultValues: {
       title: todo.title,
     },
   });
 
-  const onSubmit = async ({ title }: z.infer<typeof schema>) => {
+  const onSubmit = async ({ title }: z.infer<typeof TodoTitleSchema>) => {
     if (title === todo.title) {
       return;
     }
 
+    setIsSubmitting(true);
     const details: Pick<Todo, 'title' | 'id'> = {
       title: title,
       id: todo.id,
@@ -44,20 +39,19 @@ const Header = ({ todo, handleTodoUpdate }: any) => {
 
     if (error) {
       toast({
-        duration: 4000,
         variant: 'destructive',
         title: 'Failed to update title',
         description: 'There was an error while updating the title. Please try again later',
       });
-      return;
+    } else {
+      handleTodoUpdate(data);
+      toast({
+        title: 'Title updated successfully',
+        description: 'The new title has been updated successfully!',
+      });
     }
 
-    handleTodoUpdate(data);
-    toast({
-      duration: 4000,
-      title: 'Title updated successfully',
-      description: 'The new title has been updated successfully!',
-    });
+    setIsSubmitting(false);
   };
 
   return (
@@ -68,10 +62,11 @@ const Header = ({ todo, handleTodoUpdate }: any) => {
           <FormField
             name="title"
             control={form.control}
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormControl>
                   <Input
+                    disabled={isSubmitting}
                     className="relative -left-1.5 h-9 w-[95%] truncate rounded-sm border-transparent bg-transparent px-1 text-lg font-semibold text-neutral-700 focus-visible:ring-1"
                     placeholder="Enter a title..."
                     {...form.register('title', { onBlur: form.handleSubmit(onSubmit) })}
