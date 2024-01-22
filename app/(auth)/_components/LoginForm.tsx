@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import styles from '../_styles/auth.module.scss';
-import { LoginFormData } from '../_types/form';
+import { LoginFormData } from '../_types';
 import { LoginSchema } from '../_schema';
 import { loginWithEmailAndPassword } from '../_actions';
 
