@@ -39,3 +39,10 @@ export async function updateTodoCategoryId(todoId: string, categoryId: string) {
   const supabase = await createSupabaseServerClient();
   return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
 }
+
+export async function updateTodoExpiryDate(expiryDate: string, todoId: string) {
+  const supabase = await createSupabaseServerClient();
+  const result = await supabase.from('todo').update({ expire_date: expiryDate }).eq('id', todoId);
+  revalidatePath('/board');
+  return result;
+}
