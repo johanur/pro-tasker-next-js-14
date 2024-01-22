@@ -11,7 +11,6 @@ import { toast } from '@/components/ui/use-toast';
 import { LoginFormData, LoginInputs } from '../_types';
 import { LoginSchema } from '../_schema';
 import { loginWithEmailAndPassword } from '../_actions';
-import { AuthTokenResponsePassword } from '@supabase/gotrue-js';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
@@ -35,7 +34,7 @@ const LoginForm = () => {
     toast({
       duration: 5000,
       title: 'Logging in...',
-      description: 'Verifying your credentials. Please wait...'
+      description: 'Verifying your credentials. Please wait...',
     });
 
     setIsSubmitting(true);
@@ -81,11 +80,7 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      {...field}
-                      data-1p-ignore
-                    />
+                    <Input disabled={isSubmitting} {...field} data-1p-ignore />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,12 +92,7 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      type="password"
-                      {...field}
-                      data-1p-ignore
-                    />
+                    <Input disabled={isSubmitting} type="password" {...field} data-1p-ignore />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

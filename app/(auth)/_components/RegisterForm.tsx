@@ -31,12 +31,11 @@ const RegisterForm = () => {
     },
   });
 
-
   const onSubmit = async (data: RegisterFormData) => {
     toast({
       duration: 4000,
       title: 'Registering...',
-      description: 'Verifying your information and creating your account. Please wait...'
+      description: 'Verifying your information and creating your account. Please wait...',
     });
 
     setIsSubmitting(true);
@@ -82,11 +81,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      {...field}
-                      data-1p-ignore
-                    />
+                    <Input disabled={isSubmitting} {...field} data-1p-ignore />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,12 +93,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      type="password"
-                      {...field}
-                      data-1p-ignore
-                    />
+                    <Input disabled={isSubmitting} type="password" {...field} data-1p-ignore />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,12 +105,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      type="password"
-                      {...field}
-                      data-1p-ignore
-                    />
+                    <Input disabled={isSubmitting} type="password" {...field} data-1p-ignore />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
