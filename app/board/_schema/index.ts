@@ -18,3 +18,15 @@ export const TodoSchema: ZodType<TodoFormData> = z.object({
     invalid_type_error: 'Expiry date is required',
   }),
 });
+
+// For Todo Edit
+export const TodoTitleSchema: ZodType<{ title: string }> = z.object({
+  title: z
+    .string({
+      required_error: 'Title is required',
+      invalid_type_error: 'Title is required',
+    })
+    .min(3, {
+      message: 'Title is too short.',
+    }),
+});
