@@ -70,7 +70,7 @@ const CategoryItem = ({ categoryWithTodos, handleUpdateList }: any) => {
               <button
                 className="flex h-auto w-full justify-start px-2 py-1.5 text-sm text-slate-500"
                 onClick={() => handleTodoCreateDialogToggle(true)}>
-                + Add a card
+                + Add a todo
               </button>
             </div>
           </div>

@@ -6,3 +6,5 @@ export const BoardContext = createContext<{
 }>({
   categories: [],
 });
+
+export const DRAFT_DESCRIPTION_STORAGE_KEY = 'draft_description';

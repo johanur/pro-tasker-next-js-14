@@ -40,3 +40,7 @@ export interface Todo {
 
 export type CategoryWithTodos = Category & { todos: Todo[] };
 export type UpdateTodoCategoryFunction = (todoId: string, targetCategoryId: string) => void;
+
+export interface DescriptionRef {
+  draftDescription(): void;
+}
