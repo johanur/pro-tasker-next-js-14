@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BoardContext } from '@/app/board/_contexts';
 import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
-import { updateTodoDetails } from '@/app/board/_actions';
+import { createActivityLog, updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 import { CategorySelectSchema } from '@/app/board/_schema';
 
@@ -53,8 +53,13 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
       category_id: categoryId,
     };
 
+    const category = categories.find(category => category.id === categoryId);
+
     try {
-      const { error, data } = await updateTodoDetails(details);
+      const { error, data } = await updateTodoDetails(details)
+      if (category) {
+        await createActivityLog(todo.id, category.title);
+      }
 
       if (error) {
         toast({

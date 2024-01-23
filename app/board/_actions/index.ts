@@ -45,6 +45,17 @@ export async function updateTodoDetails(todo: Partial<Todo>): Promise<PostgrestS
   return result;
 }
 
+export async function createActivityLog(todoId: string, categoryTitle: string){
+  const supabase = await createSupabaseServerClient();
+
+  const payload = {
+    todo_id: todoId,
+    category_title: categoryTitle,
+  };
+
+  return supabase.from('activity').insert(payload);
+}
+
 export async function signOut(): Promise<{ error: AuthError | null }> {
   const supabase = await createSupabaseServerClient();
   return await supabase.auth.signOut();
