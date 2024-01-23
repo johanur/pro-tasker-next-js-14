@@ -1,6 +1,6 @@
 # ProTasker
 
-Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</strong> to streamline task management experience.
+Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</strong> and <strong>Supabase</strong> to streamline task management experience.
 
 ## Features
 - Authentication & Authorization
@@ -12,6 +12,9 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
 - Expiry Date Visibility
 
 ## Technology used
+
+### Frontend
+
 <table>
   <tr>
     <td align="center">
@@ -27,10 +30,6 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
       <br>TypeScript
     </td>
     <td align="center">
-      <img src="https://skillicons.dev/icons?i=supabase" />
-      <br>Supabase
-    </td>
-    <td align="center">
       <img src="https://skillicons.dev/icons?i=tailwind" />
       <br>Tailwind CSS
     </td>
@@ -41,6 +40,21 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
     <td align="center">
       <img src="https://skillicons.dev/icons?i=css" />
       <br>CSS
+    </td>
+  </tr>
+</table>
+
+### Backend 
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://skillicons.dev/icons?i=supabase" />
+      <br>Supabase
+    </td>
+    <td align="center">
+      <img src="https://skillicons.dev/icons?i=postgres" />
+      <br>PostgreSQL
     </td>
   </tr>
 </table>
