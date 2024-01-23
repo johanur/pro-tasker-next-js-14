@@ -12,7 +12,7 @@ const Logout = () => {
   const logout = async () => {
     toast({
       duration: 2000,
-      title: 'Logging Out...'
+      title: 'Logging Out...',
     });
 
     try {
@@ -20,15 +20,15 @@ const Logout = () => {
       router.push('/login');
     } catch {
       toast({
-        title: 'Something went wrong while logging out!'
+        title: 'Something went wrong while logging out!',
       });
     }
   };
   return (
-      <Button onClick={logout} variant="link" className="text-md p-0 font-medium text-blue-500 hover:no-underline">
-        <LogOut className="mr-2" size={20} />
-        Logout
-      </Button>
+    <Button onClick={logout} variant="link" className="text-md p-0 font-medium text-blue-500 hover:no-underline">
+      <LogOut className="mr-2" size={20} />
+      Logout
+    </Button>
   );
 };
 

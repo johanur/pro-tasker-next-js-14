@@ -12,7 +12,6 @@ import { toast } from '@/components/ui/use-toast';
 import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
 import { TodoTitleSchema } from '@/app/board/_schema';
 
-
 const Header = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -52,7 +51,6 @@ const Header = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
         description: 'The new title has been updated successfully!',
       });
       handleTodoUpdate(data);
-
     } catch {
       toast({
         variant: 'destructive',
@@ -61,7 +59,6 @@ const Header = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   return (

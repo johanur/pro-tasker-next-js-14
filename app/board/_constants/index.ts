@@ -15,4 +15,3 @@ export const DayRemainingAndStatusMap = {
 };
 
 export const DRAFT_DESCRIPTION_STORAGE_KEY = 'draft_description';
-

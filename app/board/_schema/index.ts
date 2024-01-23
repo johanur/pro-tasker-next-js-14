@@ -39,7 +39,6 @@ export const CategorySelectSchema: ZodType<{ category: string }> = z.object({
   category: z.string(),
 });
 
-
 export const DescriptionSchema: ZodType<{ description: string }> = z.object({
-  description: z.string().min(1, {message: 'Description is required'}),
+  description: z.string().min(1, { message: 'Description is required' }),
 });

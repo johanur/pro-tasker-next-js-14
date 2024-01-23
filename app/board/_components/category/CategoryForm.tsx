@@ -23,8 +23,8 @@ const CategoryForm = () => {
   const form = useForm<AddCategorySchema>({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
-      title: ''
-    }
+      title: '',
+    },
   });
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const CategoryForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input disabled={isSubmitting} className="h-8"  {...field} />
+                    <Input disabled={isSubmitting} className="h-8" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

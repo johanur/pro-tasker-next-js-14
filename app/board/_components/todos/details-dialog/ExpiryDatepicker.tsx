@@ -14,7 +14,6 @@ import { toast } from '@/components/ui/use-toast';
 import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
 import { ExpiryDateSchema } from '@/app/board/_schema';
 
-
 const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -136,7 +135,10 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps
                   <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent">
                     <Check className="flex-grow-0 text-black" size={20} />
                   </Button>
-                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                  <Button
+                    disabled={isSubmitting}
+                    className="bg-transparent p-0 hover:bg-transparent"
+                    onClick={disableEditing}>
                     <X className="flex-grow-0 text-black" size={20} />
                   </Button>
                 </div>

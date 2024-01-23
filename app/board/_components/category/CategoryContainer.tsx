@@ -44,7 +44,7 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
 
         toast({
           duration: 4000,
-          title: 'Category updated successfully'
+          title: 'Category updated successfully',
         });
       })
       .catch(() => {
@@ -52,14 +52,14 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
           variant: 'destructive',
           title: 'Something went wrong!',
         });
-      })
+      });
   };
 
   const updateTodoCategory = async (todoId: string, categoryId: string) => {
     const payload: Pick<Todo, 'id' | 'category_id'> = {
       id: todoId,
-      category_id: categoryId
-    }
+      category_id: categoryId,
+    };
     return await updateTodoDetails(payload);
   };
 
@@ -69,8 +69,8 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
         categories: categories,
       }}>
       <ol className="flex h-full gap-x-3">
-        {categoriesWithTodos.map((category) => (
-           <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />
+        {categoriesWithTodos.map(category => (
+          <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />
         ))}
         <CategoryForm />
       </ol>

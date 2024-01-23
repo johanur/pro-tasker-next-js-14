@@ -13,7 +13,6 @@ import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 import { CategorySelectSchema } from '@/app/board/_schema';
 
-
 const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const { categories } = useContext(BoardContext);
 
@@ -72,7 +71,6 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
       });
       handleTodoUpdate(data);
       disableEditing();
-
     } catch {
       toast({
         variant: 'destructive',
@@ -101,7 +99,10 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
                       name="category"
                       render={({ field }) => (
                         <FormItem>
-                          <Select disabled={isSubmitting} onValueChange={field.onChange} defaultValue={todo.category_id}>
+                          <Select
+                            disabled={isSubmitting}
+                            onValueChange={field.onChange}
+                            defaultValue={todo.category_id}>
                             <FormControl>
                               <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                                 <SelectValue />
@@ -122,7 +123,10 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
                   <Button disabled={isSubmitting} type="submit" className="bg-transparent p-0 hover:bg-transparent">
                     <Check className="text-black" size={20} />
                   </Button>
-                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                  <Button
+                    disabled={isSubmitting}
+                    className="bg-transparent p-0 hover:bg-transparent"
+                    onClick={disableEditing}>
                     <X className="text-black" size={20} />
                   </Button>
                 </div>

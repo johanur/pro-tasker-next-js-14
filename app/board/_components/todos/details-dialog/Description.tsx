@@ -14,7 +14,6 @@ import { Badge } from '@/components/ui/badge';
 import { DRAFT_DESCRIPTION_STORAGE_KEY } from '@/app/board/_constants';
 import { DescriptionSchema } from '@/app/board/_schema';
 
-
 const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponentsProps, ref) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,7 +66,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponent
 
   const removeDraftDescriptionFromStorage = () => {
     localStorage.removeItem(DRAFT_DESCRIPTION_STORAGE_KEY);
-  }
+  };
 
   const onSubmit = async ({ description }: z.infer<typeof DescriptionSchema>) => {
     if (description === todo.description) {
@@ -97,7 +96,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponent
       removeDraftDescriptionFromStorage();
       setHasDraftDescription(false);
       disableEditing();
-    } catch  {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Something went wrong!',
