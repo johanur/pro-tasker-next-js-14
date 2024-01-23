@@ -15,7 +15,7 @@ const Activity = forwardRef(({ todoId }: ActivityProps, ref) => {
 
   const onHideDetails = () => {
     setShowActivity(false);
-  }
+  };
   const onShowDetails = () => {
     setShowActivity(true);
 
@@ -26,12 +26,11 @@ const Activity = forwardRef(({ todoId }: ActivityProps, ref) => {
     }
 
     fetchActivities();
-  }
-
+  };
 
   useImperativeHandle(ref, () => {
     return {
-      fetchActivities: fetchActivities
+      fetchActivities: fetchActivities,
     };
   });
 
@@ -57,51 +56,46 @@ const Activity = forwardRef(({ todoId }: ActivityProps, ref) => {
         title: 'Something Went Wrong!',
       });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="flex items-start gap-x-3 w-full mt-2">
-      <ActivityIcon className="h-5 w-5 mt-0.5 text-neutral-700" />
+    <div className="mt-2 flex w-full items-start gap-x-3">
+      <ActivityIcon className="mt-0.5 h-5 w-5 text-neutral-700" />
       <div className="w-full">
         <div className="flex justify-between">
-          <p className="font-semibold text-neutral-700 mb-5">
-            Activity
-          </p>
-          {
-            showActivity ? (
-              <Button disabled={isLoading} onClick={onHideDetails} variant="secondary" className="h-6 w-1/5 rounded-sm bg-slate-300 hover:bg-slate-200">
-                Hide Details
-              </Button>
-            ) : (
-              <Button onClick={onShowDetails} className="h-6 w-1/5 rounded-sm bg-indigo-600 hover:bg-indigo-500">
-                Show Details
-              </Button>
-            )
-          }
-        </div>
-        {showActivity && (
-          isLoading ? (
-            <h1 className="text-center mt-2 text-neutral-700">Fetching Activities....</h1>
+          <p className="mb-5 font-semibold text-neutral-700">Activity</p>
+          {showActivity ? (
+            <Button
+              disabled={isLoading}
+              onClick={onHideDetails}
+              variant="secondary"
+              className="h-6 w-1/5 rounded-sm bg-slate-300 hover:bg-slate-200">
+              Hide Details
+            </Button>
           ) : (
-            <div className="overflow-auto max-h-60 ">
+            <Button onClick={onShowDetails} className="h-6 w-1/5 rounded-sm bg-indigo-600 hover:bg-indigo-500">
+              Show Details
+            </Button>
+          )}
+        </div>
+        {showActivity &&
+          (isLoading ? (
+            <h1 className="mt-2 text-center text-neutral-700">Fetching Activities....</h1>
+          ) : (
+            <div className="max-h-60 overflow-auto ">
               <ol className="mt-2 space-y-4">
-                {activities.map((item) => (
-                  <ActivityItem
-                    key={item.id}
-                    title={item.category_title}
-                    createdAt={item.created_at}
-                  />
+                {activities.map(item => (
+                  <ActivityItem key={item.id} title={item.category_title} createdAt={item.created_at} />
                 ))}
               </ol>
             </div>
-          )
-        )}
+          ))}
       </div>
     </div>
-  )
-})
+  );
+});
 
 Activity.displayName = 'Activity';
 

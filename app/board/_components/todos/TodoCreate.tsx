@@ -188,7 +188,10 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
                 )}
               />
               <div className="flex gap-x-4">
-                <Button disabled={isSubmitting} type="submit" className="h-8 w-6/12 rounded-sm bg-indigo-600 hover:bg-indigo-500">
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className="h-8 w-6/12 rounded-sm bg-indigo-600 hover:bg-indigo-500">
                   Submit
                 </Button>
                 <Button

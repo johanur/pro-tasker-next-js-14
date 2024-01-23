@@ -91,7 +91,7 @@ export interface ActivityRef {
 }
 
 export interface ActivityProps {
- todoId: string;
+  todoId: string;
 }
 
 export interface ActivityItemProps {

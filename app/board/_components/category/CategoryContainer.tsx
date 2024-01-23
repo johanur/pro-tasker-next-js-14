@@ -63,7 +63,7 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
 
     const category = categories.find(category => category.id === categoryId);
 
-    const updatedTodoDetails =  await updateTodoDetails(payload);
+    const updatedTodoDetails = await updateTodoDetails(payload);
 
     if (category) {
       await createActivityLog(todoId, category.title);

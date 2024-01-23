@@ -56,7 +56,7 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
     const category = categories.find(category => category.id === categoryId);
 
     try {
-      const { error, data } = await updateTodoDetails(details)
+      const { error, data } = await updateTodoDetails(details);
       if (category) {
         await createActivityLog(todo.id, category.title);
       }
