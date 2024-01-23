@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { BoardContext } from '@/app/board/_contexts';
 import { toast } from '@/components/ui/use-toast';
-import { updateTodoDetails } from '@/app/board/_actions';
+import { createActivityLog, updateTodoDetails } from '@/app/board/_actions';
 import { Category, CategoryContainerProps, Todo } from '@/app/board/_types';
 
 import CategoryForm from '../../_components/category/CategoryForm';
@@ -60,7 +60,15 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
       id: todoId,
       category_id: categoryId,
     };
-    return await updateTodoDetails(payload);
+
+    const category = categories.find(category => category.id === categoryId);
+
+    const updatedTodoDetails = await updateTodoDetails(payload);
+
+    if (category) {
+      await createActivityLog(todoId, category.title);
+    }
+    return updatedTodoDetails;
   };
 
   return (
