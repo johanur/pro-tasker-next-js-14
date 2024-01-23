@@ -2,7 +2,7 @@
 import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import createSupabaseServerClient from '@/lib/supabase/server';
 import { AuthError, PostgrestSingleResponse } from '@supabase/supabase-js';
-import { CategoryWithTodos, Todo, TodoFormData } from '@/app/board/_types';
+import { ActivityLog, CategoryWithTodos, Todo, TodoFormData } from '@/app/board/_types';
 import { format } from 'date-fns';
 
 export async function getCategoriesWithTodos(): Promise<PostgrestSingleResponse<CategoryWithTodos[]>> {
@@ -54,6 +54,11 @@ export async function createActivityLog(todoId: string, categoryTitle: string){
   };
 
   return supabase.from('activity').insert(payload);
+}
+
+export async function getActivityLogs(todoId: string): Promise<PostgrestSingleResponse<ActivityLog[]>> {
+  const supabase = await createSupabaseServerClient();
+  return supabase.from('activity').select('*').eq('todo_id', todoId).order('created_at', { ascending: false })
 }
 
 export async function signOut(): Promise<{ error: AuthError | null }> {

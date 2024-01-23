@@ -1,9 +1,10 @@
-import { DayRemaining } from '@/app/board/_enums';
 import { z } from 'zod';
+import { DayRemaining } from '@/app/board/_enums';
 import { CategorySchema, TodoSchema } from '@/app/board/_schema';
 
 export type AddCategorySchema = z.infer<typeof CategorySchema>;
 export type AddTodoSchema = z.infer<typeof TodoSchema>;
+export type CategoryWithTodos = Category & { todos: Todo[] };
 
 export interface CategoryFormData {
   title: string;
@@ -42,12 +43,6 @@ export interface ExtendedTodo extends Todo {
   daysRemaining: number;
 }
 
-export type CategoryWithTodos = Category & { todos: Todo[] };
-
-export interface DescriptionRef {
-  draftDescription(): void;
-}
-
 export interface CategoryContainerProps {
   data: CategoryWithTodos[];
 }
@@ -77,4 +72,29 @@ export interface TodoDetailsProps {
 export interface TodoDetailsComponentsProps {
   todo: ExtendedTodo;
   handleTodoUpdate: (todo: Todo) => void;
+}
+
+export interface DescriptionRef {
+  draftDescription(): void;
+}
+
+export interface ActivityLog {
+  id: string;
+  todo_id: string;
+  category_title: string;
+  created_at: Date;
+  user_id: string;
+}
+
+export interface ActivityRef {
+  fetchActivities(): void;
+}
+
+export interface ActivityProps {
+ todoId: string;
+}
+
+export interface ActivityItemProps {
+  title: string;
+  createdAt: Date;
 }
