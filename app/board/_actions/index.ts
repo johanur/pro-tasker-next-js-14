@@ -28,14 +28,9 @@ export async function addTodo(todo: TodoFormData): Promise<PostgrestSingleRespon
     category_id: todo.category,
   };
   const result = await supabase.from('todo').insert(payload).single();
-  
+
   revalidatePath('/board');
   return result;
-}
-
-export async function updateTodoCategoryId(todoId: string, categoryId: string) {
-  const supabase = await createSupabaseServerClient();
-  return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
 }
 
 export async function updateTodoDetails(todo: Partial<Todo>): Promise<PostgrestSingleResponse<Todo>> {
