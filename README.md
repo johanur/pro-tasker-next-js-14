@@ -59,6 +59,48 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
   </tr>
 </table>
 
+## Technical Concepts
+
+### Architecture Overview
+The project is designed with a clear separation between its frontend and backend components. The frontend is built using <strong>Next.js(v14)</strong> with the new app routing, server components and  server actions features. The application is styled with shadcn/ui and Tailwind CSS. On the backend, <strong>Supabase</strong> serves as a robust backend-as-a-service (BaaS) and <strong>PostgreSQL</strong> acts as the database management system.
+
+### Frontend:
+- Utilized the latest <strong>Next.js(v14</strong>) built on top of <strong>React(v18)</strong> for building user interfaces also integrating server-side rendering for enchance performance. This approach significantly improved the website's speed and user experience, as server-side rendering pre-generates pages on the server, reducing load times for users. An alternate approach could have involved traditional client-side rendering (CSR), where pages are generated on the client side. However, this might result in longer initial loading times, impacting user experience.
+  
+- Leveraged <strong>Next.js(v14</strong>) new App routing system to build file-based routing and use feature such as <strong>Server Components</strong> and <strong>Server Actions</strong>. Utilized the new server components and server actions of Next.js(v14) to fetch data directly on the server and rendered in the server without zero JS being sent to the browser which helps reducing the bundle size and improving performance. Alternative / previous approach of client component was to fetch data from the server and a javascript bundle containing states, events is sent to the browser.
+
+- Implemented Functional Components for concise and modular UI development
+
+- Implemented <strong>React Hooks</strong> for efficent state management and side effects in functional components
+
+- Utilized the <strong>React Context API</strong> to manage state within the component tree, enhancing communication between components and reducing the need for prop drilling. While an alternative approach could have involved using global state management tools like Redux or Zustand for more efficient state management across the entire application or among sibling components, the context API proved sufficient given the project's scope
+
+- Implemented the <strong>Drag and Drop HTML API</strong> to facilitate the seamless movement of todos between different categories.
+
+- Utilized local storage for maintaining the todo description state during the editing process, ensuring its persistence and retrieval even after a page refresh. Another approach could have been used is session storage but it will only retains data for the duration of a page session
+
+- Calculated remanining days of a to-do by subtracting expiry date with current date in the frontend for user-friendly notification. Alternatively, utilizing <strong>PL/pgSQL</strong> functions in the backend (Supabase) would ensure consistency across clients, reduce client load, enforce secure logic
+
+- Adopted Tailwind CSS for a utility-first styling approach, accelerating development through pre-designed utility classes to ensure consistency and responsiveness.
+
+### Backend:
+- Integrated <strong>Supabase</strong> as the backend, utilizing Supabase Auth for user authentication and authorization
+- Used Supabase database, powered by <strong>PostgreSQL</strong> to store category, to-do information
+
+### Programming Language:
+- Implemented <strong>TypeScript</strong> for static typing in frontend
+- Enforced strong typing to catch potential errors during development
+
+<br>
+
+## Database Diagram 
+
+<kbd>
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/bfa2d98c-2b68-4bbe-acef-6e86ea4c2c56">
+</kbd>
+
+<br>
+
 ## Prerequisites
 
 Before you dive into ProTasker, ensure that you have the following prerequisites installed on your computer:
@@ -94,9 +136,17 @@ To run the application, follow these simple steps:
     pnpm install
     # or
     bun install
-  
 
-4. Launch the development server:
+4. Create a environemnt file in the root of the project and paste the keys from <strong>Supabase</strong> project:
+
+    ```bash
+    touch .env
+    ```
+    ```bash
+    NEXT_PUBLIC_SUPABASE_URL=your-project-url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-secret-key
+
+6. Launch the development server:
 
    ```bash
     npm run dev
@@ -137,4 +187,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 <kbd>
   <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/b2352e50-f028-4e91-917b-56e91d80f8a2">
+</kbd>
+
+<hr>
+
+<kbd>
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/abbf3224-5ac1-457e-aa58-4c3730ffaf3a">
 </kbd>
