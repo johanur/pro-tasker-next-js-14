@@ -3,7 +3,7 @@ import { getCategoriesWithTodos } from '@/app/board/_actions';
 import readUserSession from '@/lib/actions/user-session.action';
 import CategoryContainer from './_components/category/CategoryContainer';
 
-const Todo = async () => {
+const Board = async () => {
   const { data: userData } = await readUserSession();
 
   if (!userData.session) {
@@ -22,4 +22,4 @@ const Todo = async () => {
   );
 };
 
-export default Todo;
+export default Board;
