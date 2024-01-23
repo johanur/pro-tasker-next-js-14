@@ -51,24 +51,32 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps
       expire_date: date,
     };
 
-    const { error, data } = await updateTodoDetails(details);
+    try {
+      const { error, data } = await updateTodoDetails(details);
 
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to update expire date',
-        description: 'There was an error while updating the expire date. Please try again later',
-      });
-    } else {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to update expire date',
+          description: 'There was an error while updating the expire date. Please try again later',
+        });
+        return;
+      }
+
       toast({
         title: 'Expire date updated successfully',
         description: 'The new expire date has been updated successfully!',
       });
       handleTodoUpdate(data);
       disableEditing();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   return (

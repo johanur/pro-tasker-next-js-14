@@ -30,28 +30,38 @@ const Header = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
     }
 
     setIsSubmitting(true);
-    const details: Pick<Todo, 'title' | 'id'> = {
+    const details: Pick<Todo, 'id' | 'title'> = {
       title: title,
       id: todo.id,
     };
 
-    const { data, error } = await updateTodoDetails(details);
+    try {
+      const { data, error } = await updateTodoDetails(details);
 
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to update title',
-        description: 'There was an error while updating the title. Please try again later',
-      });
-    } else {
-      handleTodoUpdate(data);
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to update title',
+          description: 'There was an error while updating the title. Please try again later',
+        });
+        return;
+      }
+
       toast({
         title: 'Title updated successfully',
         description: 'The new title has been updated successfully!',
       });
+      handleTodoUpdate(data);
+
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something wrong wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
 
-    setIsSubmitting(false);
   };
 
   return (

@@ -47,11 +47,10 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
           title: 'Category updated successfully'
         });
       })
-      .catch(error => {
+      .catch(() => {
         toast({
           variant: 'destructive',
           title: 'Something went wrong!',
-          description: error,
         });
       })
   };
@@ -70,9 +69,9 @@ const CategoryContainer = ({ data }: CategoryContainerProps) => {
         categories: categories,
       }}>
       <ol className="flex h-full gap-x-3">
-        {categoriesWithTodos.map((category) => {
-          return <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />;
-        })}
+        {categoriesWithTodos.map((category) => (
+           <CategoryItem key={category.id} categoryWithTodos={category} handleUpdateList={handleUpdateList} />
+        ))}
         <CategoryForm />
       </ol>
     </BoardContext.Provider>

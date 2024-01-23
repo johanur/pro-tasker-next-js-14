@@ -45,6 +45,14 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
     form.setValue('category', categoryId);
   };
 
+  const handleCloseDialog = () => {
+    if (isSubmitting) {
+      return;
+    }
+    form.reset();
+    onToggle(false);
+  };
+
   const onSubmit = async (values: TodoFormData) => {
     toast({
       title: 'Creating todo...',
@@ -52,31 +60,32 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
 
     setIsSubmitting(true);
 
+  try {
     const { error } = await addTodo(values);
 
-    if (error?.message) {
+    if (error) {
       toast({
         variant: 'destructive',
         title: 'Failed to create todo',
-        description: 'There was an error while saving the new todo. Please try again later.',
+        description: 'There was an error while saving the new todo. Please try again later',
       });
-    } else {
-      toast({
-        title: 'Todo Added Successfully',
-        description: 'The new todo has been added successfully!',
-      });
-      handleCloseDialog();
-    }
-
-    setIsSubmitting(false);
-  };
-
-  const handleCloseDialog = () => {
-    if (isSubmitting) {
       return;
     }
-    form.reset();
-    onToggle(false);
+
+    toast({
+      title: 'Todo Added Successfully',
+      description: 'The new todo has been added successfully!',
+    });
+    handleCloseDialog();
+
+  } catch {
+    toast({
+      variant: 'destructive',
+      title: 'Something went wrong!',
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
   };
 
   return (

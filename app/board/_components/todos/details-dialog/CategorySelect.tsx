@@ -34,11 +34,12 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
     resolver: zodResolver(CategorySelectSchema),
   });
 
-  const disableEditing = () => {
-    setIsEditing(false);
-  };
   const enableEditing = () => {
     setIsEditing(true);
+  };
+
+  const disableEditing = () => {
+    setIsEditing(false);
   };
 
   const onSubmit = async ({ category: categoryId }: z.infer<typeof CategorySelectSchema>) => {
@@ -53,24 +54,33 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
       category_id: categoryId,
     };
 
-    const { error, data } = await updateTodoDetails(details);
+    try {
+      const { error, data } = await updateTodoDetails(details);
 
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to update category',
-        description: 'There was an error while updating the category. Please try again later',
-      });
-    } else {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to update category',
+          description: 'There was an error while updating the category. Please try again later',
+        });
+        return;
+      }
+
       toast({
         title: 'Category updated successfully',
         description: 'The new category has been updated successfully!',
       });
       handleTodoUpdate(data);
       disableEditing();
-    }
 
-    setIsSubmitting(false);
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something Went Wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
