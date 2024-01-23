@@ -110,6 +110,15 @@ The project is designed with a clear separation between its frontend and backend
 
 <br>
 
+
+## Data Flow Diagram 
+
+<kbd>
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/e4f4b87a-ae8e-47d5-860a-2e84dd7f4d7b">
+</kbd>
+
+<br>
+
 ## Prerequisites
 
 Before you dive into ProTasker, ensure that you have the following prerequisites installed on your computer:
