@@ -11,6 +11,7 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
 - Edit To-do with ease
 - Drag and Drop Functionality
 - Expiry Date Visibility
+- Ability to Track and View Todo Category Update History
 
 ## Technology used
 
@@ -108,7 +109,7 @@ The project is designed with a clear separation between its frontend and backend
 ## Database Diagram
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/bfa2d98c-2b68-4bbe-acef-6e86ea4c2c56">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/1ceb0fb4-ea3c-4eed-b3e3-1bb01e01faed">
 </kbd>
 
 <br>
@@ -117,7 +118,7 @@ The project is designed with a clear separation between its frontend and backend
 ## Data Flow Diagram 
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/e4f4b87a-ae8e-47d5-860a-2e84dd7f4d7b">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/c13553ca-56bb-44d0-990f-d7297f032094">
 </kbd>
 
 <br>
@@ -208,17 +209,24 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/3194d2c8-31a0-4b2f-8e69-902752698f35">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/d6c4b534-44b5-4c33-812a-87febfbb3251">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/b2352e50-f028-4e91-917b-56e91d80f8a2">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/50ea428a-6449-4a74-a6d9-488e4428b3ce">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/abbf3224-5ac1-457e-aa58-4c3730ffaf3a">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/67b35b92-1257-4bba-b62d-4c16593d5694">
 </kbd>
+
+<hr>
+
+<kbd>
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/2a160f30-1baa-4440-b9f2-2c27cf943d61">
+</kbd>
+
