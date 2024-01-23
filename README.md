@@ -11,6 +11,7 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
 - Drag and Drop Functionality
 - Expiry Date Visibility
 
+
 ## Technology used
 
 ### Frontend
@@ -58,6 +59,8 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
     </td>
   </tr>
 </table>
+
+<br>
 
 ## Technical Concepts
 
