@@ -88,11 +88,17 @@ The project is designed with a clear separation between its frontend and backend
 
 ### Backend:
 - Integrated <strong>Supabase</strong> as the backend, utilizing Supabase Auth for user authentication and authorization
+
+- Supabase's Auth module streamlines user authentication using PostgreSQL's built-in functionality. To integrate this module, developers install two key packages initially: `@supabase/supabase-js` for interacting with Supabase and, for server-side rendering frameworks, `@supabase/ssr`. Once installed, the authentication process begins with users logging in through their email addresses and passwords. Supabase validates these credentials against entries in the `users` table and, upon successful verification, generates an access token (JWT) containing the user's UUID and other relevant details. Following a successful login, Supabase creates a session object, incorporating the user's UUID, role, and additional information. This session object is then stored in the `sessions` table, associated with the user's ID. To manage the user's session, Supabase sets thegenerated access token (JWT), refresh token and other relevant information as a cookie in the user's browser. The crucial role of this cookie is to sustain the user's session. Additionally, Supabase middleware ensures effective session management and access control by refreshing sessions before loading Server Component routes.
+
+- For managing authorization, Supabase utilizes PostgreSQL's Row Level Security (RLS) feature. RLS enables the definition of policies that control access to rows within tables based on the user's identity. The initial step involves enabling RLS for the specific table where these policies will be implemented. Once RLS is activated,  we have the flexibility to create policies that outline which users have access to the data and the permissible actions (CREATE, READ, UPDATE, DELETE) they can undertake.
+
 - Used Supabase database, powered by <strong>PostgreSQL</strong> to store category, to-do information
 
 ### Programming Language:
 - Implemented <strong>TypeScript</strong> for static typing in frontend
 - Enforced strong typing to catch potential errors during development
+- By clearly defining and enforcing strong typing, it can help us catch unexpected inputs or manipulations, reducing the chances of security issues related to data integrity and validation.
 
 <br>
 
