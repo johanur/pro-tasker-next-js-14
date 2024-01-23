@@ -187,17 +187,19 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
                   </FormItem>
                 )}
               />
-              <Button disabled={isSubmitting} type="submit" className="h-8 w-1/5 rounded-sm bg-indigo-600">
-                Submit
-              </Button>
-              <Button
-                disabled={isSubmitting}
-                type="button"
-                variant="secondary"
-                className="mx-4 h-8 w-1/5 rounded-sm"
-                onClick={handleCloseDialog}>
-                Close
-              </Button>
+              <div className="flex gap-x-4">
+                <Button disabled={isSubmitting} type="submit" className="h-8 w-6/12 rounded-sm bg-indigo-600">
+                  Submit
+                </Button>
+                <Button
+                  disabled={isSubmitting}
+                  type="button"
+                  variant="secondary"
+                  className="h-8 w-6/12 rounded-sm"
+                  onClick={handleCloseDialog}>
+                  Close
+                </Button>
+              </div>
             </form>
           </Form>
         </DialogContent>
