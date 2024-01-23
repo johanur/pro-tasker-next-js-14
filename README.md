@@ -3,6 +3,7 @@
 Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</strong> and <strong>Supabase</strong> to streamline task management experience.
 
 ## Features
+
 - Authentication & Authorization
 - Create Categories
 - Quick To-do Entry
@@ -10,7 +11,6 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
 - Edit To-do with ease
 - Drag and Drop Functionality
 - Expiry Date Visibility
-
 
 ## Technology used
 
@@ -45,7 +45,7 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
   </tr>
 </table>
 
-### Backend 
+### Backend
 
 <table>
   <tr>
@@ -65,11 +65,12 @@ Introducing ProTasker, a simple To-do board app built with <strong>Next.js 14</s
 ## Technical Concepts
 
 ### Architecture Overview
-The project is designed with a clear separation between its frontend and backend components. The frontend is built using <strong>Next.js(v14)</strong> with the new app routing, server components and  server actions features. The application is styled with shadcn/ui and Tailwind CSS. On the backend, <strong>Supabase</strong> serves as a robust backend-as-a-service (BaaS) and <strong>PostgreSQL</strong> acts as the database management system.
+
+The project is designed with a clear separation between its frontend and backend components. The frontend is built using <strong>Next.js(v14)</strong> with the new app routing, server components and server actions features. The application is styled with shadcn/ui and Tailwind CSS. On the backend, <strong>Supabase</strong> serves as a robust backend-as-a-service (BaaS) and <strong>PostgreSQL</strong> acts as the database management system.
 
 ### Frontend:
+
 - Utilized the latest <strong>Next.js(v14</strong>) built on top of <strong>React(v18)</strong> for building user interfaces also integrating server-side rendering for enchance performance. This approach significantly improved the website's speed and user experience, as server-side rendering pre-generates pages on the server, reducing load times for users. An alternate approach could have involved traditional client-side rendering (CSR), where pages are generated on the client side. However, this might result in longer initial loading times, impacting user experience.
-  
 - Leveraged <strong>Next.js(v14</strong>) new App routing system to build file-based routing and use feature such as <strong>Server Components</strong> and <strong>Server Actions</strong>. Utilized the new server components and server actions of Next.js(v14) to fetch data directly on the server and rendered in the server without zero JS being sent to the browser which helps reducing the bundle size and improving performance. Alternative / previous approach of client component was to fetch data from the server and a javascript bundle containing states, events is sent to the browser.
 
 - Implemented Functional Components for concise and modular UI development
@@ -87,6 +88,7 @@ The project is designed with a clear separation between its frontend and backend
 - Adopted Tailwind CSS for a utility-first styling approach, accelerating development through pre-designed utility classes to ensure consistency and responsiveness.
 
 ### Backend:
+
 - Integrated <strong>Supabase</strong> as the backend, utilizing Supabase Auth for user authentication and authorization
 
 - Supabase's Auth module streamlines user authentication using PostgreSQL's built-in functionality. To integrate this module, developers install two key packages initially: `@supabase/supabase-js` for interacting with Supabase and, for server-side rendering frameworks, `@supabase/ssr`. Once installed, the authentication process begins with users logging in through their email addresses and passwords. Supabase validates these credentials against entries in the `users` table and, upon successful verification, generates an access token (JWT) containing the user's UUID and other relevant details. Following a successful login, Supabase creates a session object, incorporating the user's UUID, role, and additional information. This session object is then stored in the `sessions` table, associated with the user's ID. To manage the user's session, Supabase sets thegenerated access token (JWT), refresh token and other relevant information as a cookie in the user's browser. The crucial role of this cookie is to sustain the user's session. Additionally, Supabase middleware ensures effective session management and access control by refreshing sessions before loading Server Component routes.
@@ -96,13 +98,14 @@ The project is designed with a clear separation between its frontend and backend
 - Used Supabase database, powered by <strong>PostgreSQL</strong> to store category, to-do information
 
 ### Programming Language:
+
 - Implemented <strong>TypeScript</strong> for static typing in frontend
 - Enforced strong typing to catch potential errors during development
 - By clearly defining and enforcing strong typing, it can help us catch unexpected inputs or manipulations, reducing the chances of security issues related to data integrity and validation.
 
 <br>
 
-## Database Diagram 
+## Database Diagram
 
 <kbd>
   <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/bfa2d98c-2b68-4bbe-acef-6e86ea4c2c56">
@@ -129,7 +132,6 @@ Before you dive into ProTasker, ensure that you have the following prerequisites
 
 `Node.js Version: ^18.17`
 
-
 ## Getting Started
 
 To run the application, follow these simple steps:
@@ -139,11 +141,15 @@ To run the application, follow these simple steps:
    ```bash
    git clone https://github.com/JohanurRahman/pro-tasker-next-js.git
 
+   ```
+
 2. Navigate to the project directory:
 
    ```bash
    cd pro-tasker-next-js
-   
+
+   ```
+
 3. Install project dependencies:
 
    ```bash
@@ -155,16 +161,21 @@ To run the application, follow these simple steps:
     # or
     bun install
 
+   ```
+
 4. Create a environemnt file in the root of the project and paste the keys from <strong>Supabase</strong> project:
 
-    ```bash
-    touch .env
-    ```
-    ```bash
-    NEXT_PUBLIC_SUPABASE_URL=your-project-url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-secret-key
+   ```bash
+   touch .env
+   ```
 
-6. Launch the development server:
+   ```bash
+   NEXT_PUBLIC_SUPABASE_URL=your-project-url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-secret-key
+
+   ```
+
+5. Launch the development server:
 
    ```bash
     npm run dev
@@ -174,7 +185,7 @@ To run the application, follow these simple steps:
     pnpm dev
     # or
     bun dev
-
+   ```
 
 ## Final Step
 
@@ -183,7 +194,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 <br>
 
 ## App Preview
-
 
 <kbd>
   <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/d7d33da6-be39-4090-adce-4eaccde1db91">

@@ -8,7 +8,11 @@ export const getDaysRemaining = (expiryDate: string): number => {
   return differenceInDays < 0 ? -1 : differenceInDays;
 };
 
-export const getUpdatedCategory = (categoriesWithTodos: CategoryWithTodos[], todoId: string, targetCategoryId: string): CategoryWithTodos[] | undefined => {
+export const getUpdatedCategory = (
+  categoriesWithTodos: CategoryWithTodos[],
+  todoId: string,
+  targetCategoryId: string
+): CategoryWithTodos[] | undefined => {
   const sourceCategory = categoriesWithTodos.find(category => category.todos.find(todo => todo.id === todoId));
   if (!sourceCategory) {
     return;
@@ -43,4 +47,4 @@ export const getUpdatedCategory = (categoriesWithTodos: CategoryWithTodos[], tod
     }
     return category;
   });
-}
+};

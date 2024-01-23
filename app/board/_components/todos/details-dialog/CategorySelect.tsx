@@ -13,7 +13,6 @@ import { updateTodoDetails } from '@/app/board/_actions';
 import { toast } from '@/components/ui/use-toast';
 import { CategorySelectSchema } from '@/app/board/_schema';
 
-
 const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const { categories } = useContext(BoardContext);
 
@@ -34,11 +33,12 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
     resolver: zodResolver(CategorySelectSchema),
   });
 
-  const disableEditing = () => {
-    setIsEditing(false);
-  };
   const enableEditing = () => {
     setIsEditing(true);
+  };
+
+  const disableEditing = () => {
+    setIsEditing(false);
   };
 
   const onSubmit = async ({ category: categoryId }: z.infer<typeof CategorySelectSchema>) => {
@@ -53,24 +53,32 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
       category_id: categoryId,
     };
 
-    const { error, data } = await updateTodoDetails(details);
+    try {
+      const { error, data } = await updateTodoDetails(details);
 
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to update category',
-        description: 'There was an error while updating the category. Please try again later',
-      });
-    } else {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to update category',
+          description: 'There was an error while updating the category. Please try again later',
+        });
+        return;
+      }
+
       toast({
         title: 'Category updated successfully',
         description: 'The new category has been updated successfully!',
       });
       handleTodoUpdate(data);
       disableEditing();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something Went Wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   return (
@@ -91,7 +99,10 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
                       name="category"
                       render={({ field }) => (
                         <FormItem>
-                          <Select disabled={isSubmitting} onValueChange={field.onChange} defaultValue={todo.category_id}>
+                          <Select
+                            disabled={isSubmitting}
+                            onValueChange={field.onChange}
+                            defaultValue={todo.category_id}>
                             <FormControl>
                               <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                                 <SelectValue />
@@ -112,7 +123,10 @@ const CategorySelect = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) 
                   <Button disabled={isSubmitting} type="submit" className="bg-transparent p-0 hover:bg-transparent">
                     <Check className="text-black" size={20} />
                   </Button>
-                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                  <Button
+                    disabled={isSubmitting}
+                    className="bg-transparent p-0 hover:bg-transparent"
+                    onClick={disableEditing}>
                     <X className="text-black" size={20} />
                   </Button>
                 </div>

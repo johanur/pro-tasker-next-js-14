@@ -33,9 +33,9 @@ const TodoDetails = ({ isOpen, onToggle, todo }: TodoDetailsProps) => {
     <>
       <Dialog open={isOpen} onOpenChange={handleCloseDialog}>
         <DialogContent className="max-w-xl gap-4" onOpenAutoFocus={e => e.preventDefault()}>
-          <Header todo={todoDetails} handleTodoUpdate={handleTodoUpdate}   />
-          <CategorySelect todo={todoDetails} handleTodoUpdate={handleTodoUpdate}  />
-          <ExpiryDatepicker todo={todoDetails} handleTodoUpdate={handleTodoUpdate}  />
+          <Header todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />
+          <CategorySelect todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />
+          <ExpiryDatepicker todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />
           <Description ref={descriptionRef} todo={todoDetails} handleTodoUpdate={handleTodoUpdate} />
         </DialogContent>
       </Dialog>

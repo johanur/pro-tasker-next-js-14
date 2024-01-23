@@ -39,24 +39,30 @@ const LoginForm = () => {
 
     setIsSubmitting(true);
 
-    const result = await loginWithEmailAndPassword(data);
+    try {
+      const { error } = await loginWithEmailAndPassword(data);
 
-    if (result.error) {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: error.message,
+          description: 'Please ensure your email and password are correct',
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       toast({
-        duration: 4000,
-        variant: 'destructive',
-        title: result.error.message,
-        description: 'Please ensure your email and password are correct',
+        duration: 3000,
+        title: "You're in!",
+        description: 'You have successfully logged in',
       });
-      setIsSubmitting(false);
-      return;
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong',
+      });
     }
-
-    toast({
-      duration: 3000,
-      title: "You're in!",
-      description: 'You have successfully logged in',
-    });
   };
 
   return (

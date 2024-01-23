@@ -14,8 +14,6 @@ import { Badge } from '@/components/ui/badge';
 import { DRAFT_DESCRIPTION_STORAGE_KEY } from '@/app/board/_constants';
 import { DescriptionSchema } from '@/app/board/_schema';
 
-
-
 const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponentsProps, ref) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,6 +49,7 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponent
   const disableEditing = () => {
     setIsEditing(false);
   };
+
   const enableEditing = () => {
     setIsEditing(true);
   };
@@ -58,11 +57,15 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponent
   const discardDescriptionChanges = () => {
     const hasDescriptionDrafted = localStorage.getItem(DRAFT_DESCRIPTION_STORAGE_KEY);
     if (hasDescriptionDrafted) {
-      localStorage.removeItem(DRAFT_DESCRIPTION_STORAGE_KEY);
-      form.resetField('description');
+      removeDraftDescriptionFromStorage();
       disableEditing();
+      form.resetField('description');
       setHasDraftDescription(false);
     }
+  };
+
+  const removeDraftDescriptionFromStorage = () => {
+    localStorage.removeItem(DRAFT_DESCRIPTION_STORAGE_KEY);
   };
 
   const onSubmit = async ({ description }: z.infer<typeof DescriptionSchema>) => {
@@ -74,27 +77,33 @@ const Description = forwardRef(({ todo, handleTodoUpdate }: TodoDetailsComponent
     const { id } = todo;
     const details: Pick<Todo, 'id' | 'description'> = { id, description };
 
-    const { error, data } = await updateTodoDetails(details);
+    try {
+      const { error, data } = await updateTodoDetails(details);
 
-    if (error) {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to update description',
+          description: 'There was an error while updating the description. Please try again later',
+        });
+        return;
+      }
       toast({
-        duration: 4000,
-        variant: 'destructive',
-        title: 'Failed to update description',
-        description: 'There was an error while updating the description. Please try again later',
-      });
-    } else {
-      toast({
-        duration: 4000,
         title: 'Description updated successfully',
         description: 'The new description has been updated successfully!',
       });
       handleTodoUpdate(data);
-      localStorage.removeItem(DRAFT_DESCRIPTION_STORAGE_KEY);
+      removeDraftDescriptionFromStorage();
       setHasDraftDescription(false);
       disableEditing();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (

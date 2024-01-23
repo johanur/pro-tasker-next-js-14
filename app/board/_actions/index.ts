@@ -1,7 +1,7 @@
 'use server';
 import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import createSupabaseServerClient from '@/lib/supabase/server';
-import { PostgrestSingleResponse } from '@supabase/supabase-js';
+import { AuthError, PostgrestSingleResponse } from '@supabase/supabase-js';
 import { CategoryWithTodos, Todo, TodoFormData } from '@/app/board/_types';
 import { format } from 'date-fns';
 
@@ -28,14 +28,9 @@ export async function addTodo(todo: TodoFormData): Promise<PostgrestSingleRespon
     category_id: todo.category,
   };
   const result = await supabase.from('todo').insert(payload).single();
-  
+
   revalidatePath('/board');
   return result;
-}
-
-export async function updateTodoCategoryId(todoId: string, categoryId: string) {
-  const supabase = await createSupabaseServerClient();
-  return supabase.from('todo').update({ category_id: categoryId }).eq('id', todoId);
 }
 
 export async function updateTodoDetails(todo: Partial<Todo>): Promise<PostgrestSingleResponse<Todo>> {
@@ -48,4 +43,9 @@ export async function updateTodoDetails(todo: Partial<Todo>): Promise<PostgrestS
     .single();
   revalidatePath('/board');
   return result;
+}
+
+export async function signOut(): Promise<{ error: AuthError | null }> {
+  const supabase = await createSupabaseServerClient();
+  return await supabase.auth.signOut();
 }

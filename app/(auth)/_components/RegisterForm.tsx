@@ -40,24 +40,30 @@ const RegisterForm = () => {
 
     setIsSubmitting(true);
 
-    const result = await registerWithEmailAndPassword(data);
+    try {
+      const { error } = await registerWithEmailAndPassword(data);
 
-    if (result.error) {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Registration failed',
+          description: error.message,
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       toast({
-        duration: 4000,
-        variant: 'destructive',
-        title: 'Registration failed',
-        description: result.error.message,
+        duration: 3000,
+        title: 'Welcome aboard!',
+        description: 'You have successfully registered',
       });
-      setIsSubmitting(false);
-      return;
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong',
+      });
     }
-
-    toast({
-      duration: 3000,
-      title: 'Welcome aboard!',
-      description: 'You have successfully registered',
-    });
   };
 
   return (

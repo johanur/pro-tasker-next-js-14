@@ -24,7 +24,6 @@ import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-
 const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,12 +36,20 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
     defaultValues: {
       title: '',
       description: '',
-      category: categoryId
+      category: categoryId,
     },
   });
 
   const onChangeCategory = (categoryId: string) => {
     form.setValue('category', categoryId);
+  };
+
+  const handleCloseDialog = () => {
+    if (isSubmitting) {
+      return;
+    }
+    form.reset();
+    onToggle(false);
   };
 
   const onSubmit = async (values: TodoFormData) => {
@@ -52,31 +59,31 @@ const TodoCreate = ({ isOpen, onToggle, categoryId }: TodoCreateProps) => {
 
     setIsSubmitting(true);
 
-    const { error } = await addTodo(values);
+    try {
+      const { error } = await addTodo(values);
 
-    if (error?.message) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to create todo',
-        description: 'There was an error while saving the new todo. Please try again later.',
-      });
-    } else {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to create todo',
+          description: 'There was an error while saving the new todo. Please try again later',
+        });
+        return;
+      }
+
       toast({
         title: 'Todo Added Successfully',
         description: 'The new todo has been added successfully!',
       });
       handleCloseDialog();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
-  };
-
-  const handleCloseDialog = () => {
-    if (isSubmitting) {
-      return;
-    }
-    form.reset();
-    onToggle(false);
   };
 
   return (

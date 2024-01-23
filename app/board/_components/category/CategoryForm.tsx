@@ -23,8 +23,8 @@ const CategoryForm = () => {
   const form = useForm<AddCategorySchema>({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
-      title: ''
-    }
+      title: '',
+    },
   });
 
   useEffect(() => {
@@ -61,24 +61,33 @@ const CategoryForm = () => {
 
   const submitCategory = async (data: CategoryFormData) => {
     setIsSubmitting(true);
-    const result = await addCategory(data.title);
 
-    if (result.error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to create Category',
-        description: 'There was an error while saving the new category. Please try again later.',
-      });
-    } else {
+    try {
+      const { error } = await addCategory(data.title);
+
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to create Category',
+          description: 'There was an error while saving the new category. Please try again later.',
+        });
+        return;
+      }
+
       toast({
         title: 'Category Added Successfully',
         description: 'The new category has been added successfully!',
       });
       disableEditing();
       form.reset();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   if (isEditing) {
@@ -95,7 +104,7 @@ const CategoryForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input disabled={isSubmitting} className="h-8"  {...field} />
+                    <Input disabled={isSubmitting} className="h-8" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

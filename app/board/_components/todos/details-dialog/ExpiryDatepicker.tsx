@@ -14,7 +14,6 @@ import { toast } from '@/components/ui/use-toast';
 import { Todo, TodoDetailsComponentsProps } from '@/app/board/_types';
 import { ExpiryDateSchema } from '@/app/board/_schema';
 
-
 const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,24 +50,32 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps
       expire_date: date,
     };
 
-    const { error, data } = await updateTodoDetails(details);
+    try {
+      const { error, data } = await updateTodoDetails(details);
 
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to update expire date',
-        description: 'There was an error while updating the expire date. Please try again later',
-      });
-    } else {
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to update expire date',
+          description: 'There was an error while updating the expire date. Please try again later',
+        });
+        return;
+      }
+
       toast({
         title: 'Expire date updated successfully',
         description: 'The new expire date has been updated successfully!',
       });
       handleTodoUpdate(data);
       disableEditing();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   return (
@@ -128,7 +135,10 @@ const ExpiryDatepicker = ({ todo, handleTodoUpdate }: TodoDetailsComponentsProps
                   <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent">
                     <Check className="flex-grow-0 text-black" size={20} />
                   </Button>
-                  <Button disabled={isSubmitting} className="bg-transparent p-0 hover:bg-transparent" onClick={disableEditing}>
+                  <Button
+                    disabled={isSubmitting}
+                    className="bg-transparent p-0 hover:bg-transparent"
+                    onClick={disableEditing}>
                     <X className="flex-grow-0 text-black" size={20} />
                   </Button>
                 </div>
