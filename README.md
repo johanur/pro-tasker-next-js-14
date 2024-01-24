@@ -118,7 +118,7 @@ The project is designed with a clear separation between its frontend and backend
 ## Data Flow Diagram 
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/c13553ca-56bb-44d0-990f-d7297f032094">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/8a709eeb-2201-45f0-bec0-5d674397986a">
 </kbd>
 
 <br>
