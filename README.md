@@ -109,7 +109,7 @@ The project is designed with a clear separation between its frontend and backend
 ## Database Diagram
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/1ceb0fb4-ea3c-4eed-b3e3-1bb01e01faed">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/1ceb0fb4-ea3c-4eed-b3e3-1bb01e01faed" alt="Database Schema">
 </kbd>
 
 <br>
@@ -118,7 +118,7 @@ The project is designed with a clear separation between its frontend and backend
 ## Data Flow Diagram 
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/8a709eeb-2201-45f0-bec0-5d674397986a">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/b4b878d1-853d-43b7-8817-75fc7e39148d" alt="Data Flow Diagram">
 </kbd>
 
 <br>
@@ -197,36 +197,36 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## App Preview
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/d7d33da6-be39-4090-adce-4eaccde1db91">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/d7d33da6-be39-4090-adce-4eaccde1db91" alt="Login">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/a38074ca-c0e9-4127-ab3a-7b44b4e45b34">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/a38074ca-c0e9-4127-ab3a-7b44b4e45b34" alt="Board">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/d6c4b534-44b5-4c33-812a-87febfbb3251">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/d6c4b534-44b5-4c33-812a-87febfbb3251" alt="Create To-do">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/50ea428a-6449-4a74-a6d9-488e4428b3ce">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/50ea428a-6449-4a74-a6d9-488e4428b3ce" alt="To-do Details">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/67b35b92-1257-4bba-b62d-4c16593d5694">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/67b35b92-1257-4bba-b62d-4c16593d5694" alt="To-do Activity">
 </kbd>
 
 <hr>
 
 <kbd>
-  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/2a160f30-1baa-4440-b9f2-2c27cf943d61">
+  <img src="https://github.com/JohanurRahman/pro-tasker-next-js/assets/42015613/2a160f30-1baa-4440-b9f2-2c27cf943d61" alt="To-do Edit">
 </kbd>
 
