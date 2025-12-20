@@ -2,7 +2,7 @@
 
 import createSupabaseServerClient from '@/lib/supabase/server';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { AuthResponse, AuthTokenResponsePassword } from '@supabase/gotrue-js';
+import { AuthResponse, AuthTokenResponsePassword } from '@supabase/supabase-js';
 import { LoginFormData, RegisterFormData } from '@/app/(auth)/_types';
 
 export async function loginWithEmailAndPassword(data: LoginFormData): Promise<AuthTokenResponsePassword> {
